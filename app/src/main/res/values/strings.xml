@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CeritaKita</string>
+
+    <string name="welcomeText">Selamat Datang Di CeritaKita</string>
+    <string name ="welcomeDesc">Apakah Anda siap berbagi cerita atau pengalaman anda sehari-hari baik berupa Liburan, karir,
+        dan pengalaman-pengalaman yang menarik?</string>
+
+    <string name ="login">MASUK</string>
+    <string name="register">DAFTAR</string>
+
+    <string name="loginText">Selamat Datang</string>
+    <string name="loginDesc">Masukkan Akun Anda</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+</resources>
