@@ -2,12 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.authenticator.login.LoginActivity">
+    android:background="@color/white"
+    tools:context=".view.authenticator.register.RegisterActivity">
 
     <ImageView
-        android:id="@+id/headerShapeLogin"
+        android:id="@+id/headerShapeRegister"
         android:layout_width="0dp"
         android:layout_height="280dp"
         android:scaleType="fitXY"
@@ -18,15 +20,16 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/loginImage"
+        android:id="@+id/RegisterImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_read"
+        app:srcCompat="@drawable/sharing"
         tools:ignore="ContentDescription" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -36,15 +39,15 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerShapeLogin">
+        app:layout_constraintTop_toBottomOf="@id/headerShapeRegister">
 
         <TextView
-            android:id="@+id/titleLogin"
+            android:id="@+id/titleRegister"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/welcomeText"
-            android:textColor="#FF000000"
+            android:layout_marginBottom="16dp"
+            android:text="@string/register_title"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,26 +55,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/loginDesc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/loginDesc"
-            android:textColor="#FF000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleLogin" />
-
-        <TextView
             android:id="@+id/usernameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/username"
-            android:textColor="#FF000000"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginDesc" />
+            app:layout_constraintTop_toBottomOf="@id/titleRegister" />
 
         <LinearLayout
             android:id="@+id/inputContainer"
@@ -83,7 +74,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/usernameText">
 
-            <!-- Email Input -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -100,28 +90,71 @@
                     tools:ignore="ContentDescription" />
 
                 <EditText
+                    android:id="@+id/UsernameInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/username_register_input"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/EmailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/email_register"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginDesc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_edittext"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/email_ic"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
                     android:id="@+id/emailInput"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="@string/username_input"
+                    android:hint="@string/email_register_input"
                     android:inputType="textEmailAddress"
-                    android:textColor="#FF000000"
-                    android:textSize="16sp"
                     android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     tools:ignore="Autofill" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/paswordText"
+                android:id="@+id/PasswordText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/password"
-                android:textColor="#FF000000" />
+                android:layout_marginBottom="8dp"
+                android:text="@string/password_register"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginDesc" />
 
-            <!-- Password Input -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -146,10 +179,9 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/password_input"
                     android:inputType="textPassword"
-                    android:textColor="#FF000000"
-                    android:textSize="16sp"
                     android:minHeight="48dp"
-                    app:errorEnabled="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     tools:ignore="Autofill" />
             </LinearLayout>
         </LinearLayout>
@@ -160,13 +192,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="16dp"
             android:minHeight="48dp"
-            android:text="@string/login"
-            android:textColor="#FFFFFFFF"
+            android:text="@string/register"
+            android:textColor="@color/white"
             app:backgroundTint="@color/orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inputContainer" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

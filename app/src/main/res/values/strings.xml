@@ -2,14 +2,32 @@
     <string name="app_name">CeritaKita</string>
 
     <string name="welcomeText">Selamat Datang Di CeritaKita</string>
-    <string name ="welcomeDesc">Apakah Anda siap berbagi cerita atau pengalaman anda sehari-hari baik berupa Liburan, karir,
+    <string name="welcomeDesc">Apakah Anda siap berbagi cerita atau pengalaman anda sehari-hari baik berupa Liburan, karir,
         dan pengalaman-pengalaman yang menarik?</string>
 
-    <string name ="login">MASUK</string>
+    <string name="login">MASUK</string>
     <string name="register">DAFTAR</string>
 
     <string name="loginText">Selamat Datang</string>
     <string name="loginDesc">Masukkan Akun Anda</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="username_input">Masukkan akun Email anda</string>
+    <string name="password_input">Masukkan kata sandi anda</string>
+    <string name="username_register">Nama lengkap</string>
+    <string name="password_register">Kata Sandi</string>
+    <string name="email_register">Email</string>
+
+    <string name="register_title">Silahkan lengkapi data diri Anda</string>
+    <string name="username_register_input">Masukkan nama lengkap anda</string>
+    <string name="email_register_input">Masukkan Akun Email anda</string>
+    <string name="pasword_register_input">Masukkan kata sandi anda</string>
+
+    <string name="error_password">Password tidak boleh kurang dari 8 karakter</string>
+
+
+    <string name="list_description">Deskripsi</string>
+
+    <string name="setting">Pengaturan</string>
+    <string name="logout">Keluar</string>
 </resources>
