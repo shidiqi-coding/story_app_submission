@@ -12,18 +12,32 @@
         android:id="@+id/rvStoryList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    
+    <ProgressBar
+        android:id="@+id/menuPB"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddStory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:backgroundTint="@color/orange"
         android:src="@drawable/ic_add"
-        tools:ignore="ContentDescription,MissingConstraints"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="638dp" />
+        android:contentDescription="@string/add_story"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

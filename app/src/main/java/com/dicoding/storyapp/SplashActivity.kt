@@ -9,7 +9,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.dicoding.storyapp.view.WelcomeActivity
 import com.dicoding.storyapp.view.authenticator.login.LoginActivity
+import com.dicoding.storyapp.view.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -24,11 +26,32 @@ class SplashActivity : AppCompatActivity() {
         }
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                val intent = Intent(this , LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+                val onboardingPref= getSharedPreferences("onBoarding",MODE_PRIVATE)
+                val userPref = getSharedPreferences("user_session",MODE_PRIVATE)
+
+                val isFirstRun = onboardingPref.getBoolean("isFirstRun", true)
+                val isLoggedIn = userPref.getBoolean("isLoggedIn",false)
+
+               when {
+                   isFirstRun -> {
+                       onboardingPref.edit().putBoolean("isFirstRun",true).apply()
+                       startActivity(Intent(this, WelcomeActivity::class.java))
+
+                   }
+
+                   isLoggedIn -> {
+                       startActivity(Intent(this, MainActivity::class.java))
+                   }
+
+                   else -> {
+                       startActivity(Intent(this, LoginActivity::class.java))
+                   }
+               }
+               finish()
 
             } , 3000
         )
+        supportActionBar?.hide()
     }
+
 }

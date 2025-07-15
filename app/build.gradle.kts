@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -45,7 +46,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.play.services.ads)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -69,4 +70,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.7.2")
 
     implementation("androidx.camera:camera-view:1.3.0")
+    implementation("androidx.exifinterface:exifinterface:1.3.2")
+    implementation("com.google.guava:guava:31.1-android")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 }

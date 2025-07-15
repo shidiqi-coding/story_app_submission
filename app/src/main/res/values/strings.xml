@@ -30,4 +30,16 @@
 
     <string name="setting">Pengaturan</string>
     <string name="logout">Keluar</string>
+    <string name="back_button">back/n</string>
+    <string name="greeting">Halo %1$s, Selamat datang di CeritaKita</string>
+
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+
+    <string name="appearance">Tampilan</string>
+    <string name="apperance_subtitle">Pilih Tema pada perangkat Anda</string>
+    <string name="add_story">add story</string>
+    <string name="empty_image_warning">Mohon masukkan gambar terlebih dahulu</string>
 </resources>

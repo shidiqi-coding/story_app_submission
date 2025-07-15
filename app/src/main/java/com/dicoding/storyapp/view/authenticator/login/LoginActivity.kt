@@ -1,21 +1,155 @@
 package com.dicoding.storyapp.view.authenticator.login
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.text.InputType
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
+import com.dicoding.storyapp.ViewModelFactory
+import com.dicoding.storyapp.data.ResultState
+import com.dicoding.storyapp.data.pref.UserModel
+import com.dicoding.storyapp.databinding.ActivityLoginBinding
+import com.dicoding.storyapp.view.WelcomeActivity
+import com.dicoding.storyapp.view.main.MainActivity
 import com.dicoding.storyapp.R
+import android.util.Patterns
 
 class LoginActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private lateinit var binding: ActivityLoginBinding
+    private var isPasswordVisible = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v , insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left , systemBars.top , systemBars.right , systemBars.bottom)
-            insets
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupView()
+        setupAction()
+        setupTogglePassword()
+
+
+        binding.btnLogBack.setOnClickListener {
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
+        binding.emailInput.addTextChangedListener {
+            binding.emailInput.error = null
+        }
+
+        binding.passwordInput.addTextChangedListener {
+            binding.passwordInput.error = null
+        }
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
+    }
+
+    private fun setupAction() {
+        binding.buttonLogin.setOnClickListener {
+            val email = binding.emailInput.text.toString().trim()
+            val password = binding.passwordInput.text.toString().trim()
+
+            var isValid = true
+
+
+            if (email.isEmpty()) {
+                binding.emailInput.error = "Email tidak boleh kosong"
+                isValid = false
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.emailInput.error = "Format email tidak valid"
+                isValid = false
+            } else {
+                binding.emailInput.error = null
+            }
+
+
+            if (password.isEmpty()) {
+                binding.passwordInput.error = "Password tidak boleh kosong"
+                isValid = false
+            } else {
+                binding.passwordInput.error = null
+            }
+
+            if (!isValid) return@setOnClickListener
+
+
+            viewModel.login(email, password).observe(this) { result ->
+                when (result) {
+                    is ResultState.Loading -> {
+                        binding.loginPB.visibility = View.VISIBLE
+                    }
+
+                    is ResultState.Success -> {
+                        binding.loginPB.visibility = View.GONE
+                        val user = result.data
+                        viewModel.saveSession(UserModel(user.name!!, user.token!!))
+
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Selamat!")
+                            setMessage("Anda berhasil login. Apakah Anda siap untuk membagi cerita?")
+                            setPositiveButton("Lanjut") { _, _ ->
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            show()
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        binding.loginPB.visibility = View.GONE
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Login Gagal")
+                            setMessage(result.error)
+                            setPositiveButton("OK", null)
+                            show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupTogglePassword() {
+        binding.ivToggleLogPassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.passwordInput.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.ivToggleLogPassword.setImageResource(R.drawable.ic_visible)
+            } else {
+                binding.passwordInput.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.ivToggleLogPassword.setImageResource(R.drawable.ic_visibility_off)
+            }
+
+
+            binding.passwordInput.setSelection(binding.passwordInput.text?.length ?: 0)
         }
     }
 }

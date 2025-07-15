@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 import com.dicoding.storyapp.databinding.ActivityWelcomeBinding
 import com.dicoding.storyapp.view.authenticator.login.LoginActivity
+import com.dicoding.storyapp.view.authenticator.register.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -44,7 +45,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         binding.registerButton.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
