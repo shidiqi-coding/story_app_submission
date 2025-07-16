@@ -22,4 +22,8 @@ class LoginViewModel(private val repository: StoryRepository) : ViewModel() {
             repository.saveSession(user)
         }
     }
+
+//    suspend fun logout() {
+//        userPreference.logout()
+//    }
 }

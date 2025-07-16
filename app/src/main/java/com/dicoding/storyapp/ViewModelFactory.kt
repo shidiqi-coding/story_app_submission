@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.storyapp.view.authenticator.login.LoginViewModel
+import com.dicoding.storyapp.view.authenticator.register.RegisterViewModel
 import com.dicoding.storyapp.view.main.MainViewModel
 import com.dicoding.storyapp.view.newstory.NewStoryViewModel
 
@@ -20,6 +21,10 @@ class ViewModelFactory(private val repository: StoryRepository) :
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+                RegisterViewModel(repository) as T
             }
 
 

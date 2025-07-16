@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 //import androidx.core.content.ContentProviderCompat.requireContext
@@ -61,6 +62,12 @@ class MainActivity : AppCompatActivity() {
             binding.menuPB.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
+        viewModel.errorMessage.observe(this) { error ->
+            if (error.isNullOrEmpty()) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu:Menu?): Boolean {
@@ -109,6 +116,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 }

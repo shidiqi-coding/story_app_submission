@@ -77,10 +77,10 @@ class LoginActivity : AppCompatActivity() {
 
 
             if (email.isEmpty()) {
-                binding.emailInput.error = "Email tidak boleh kosong"
+                binding.emailInput.error = getString(R.string.email_empty)
                 isValid = false
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                binding.emailInput.error = "Format email tidak valid"
+                binding.emailInput.error = getString(R.string.email_invalid)
                 isValid = false
             } else {
                 binding.emailInput.error = null
@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
 
 
             if (password.isEmpty()) {
-                binding.passwordInput.error = "Password tidak boleh kosong"
+                binding.passwordInput.error = getString(R.string.password_empty)
                 isValid = false
             } else {
                 binding.passwordInput.error = null
@@ -109,9 +109,9 @@ class LoginActivity : AppCompatActivity() {
                         viewModel.saveSession(UserModel(user.name!!, user.token!!))
 
                         AlertDialog.Builder(this).apply {
-                            setTitle("Selamat!")
-                            setMessage("Anda berhasil login. Apakah Anda siap untuk membagi cerita?")
-                            setPositiveButton("Lanjut") { _, _ ->
+                            setTitle(getString(R.string.success_title))
+                            setMessage(getString(R.string.login_success_message))
+                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                 startActivity(intent)
@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                     is ResultState.Error -> {
                         binding.loginPB.visibility = View.GONE
                         AlertDialog.Builder(this).apply {
-                            setTitle("Login Gagal")
+                            setTitle(getString(R.string.login_failed_title))
                             setMessage(result.error)
                             setPositiveButton("OK", null)
                             show()

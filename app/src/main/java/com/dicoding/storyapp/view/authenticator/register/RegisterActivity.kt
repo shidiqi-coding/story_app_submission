@@ -6,14 +6,20 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.storyapp.ViewModelFactory
 import com.dicoding.storyapp.databinding.ActivityRegisterBinding
 import com.dicoding.storyapp.view.WelcomeActivity
 import com.dicoding.storyapp.R
 
 
 class RegisterActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     private lateinit var binding: ActivityRegisterBinding
 
@@ -51,14 +57,14 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.buttonRegister.setOnClickListener {
-            //val name = binding.nameInput.text.toString()
+//            val name = binding.nameInput.text.toString()
             val email = binding.emailInput.text.toString()
-            //val password = binding.passwordInput.text.toString()
+           // val password = binding.passwordInput.text.toString()
 
             AlertDialog.Builder(this).apply {
-                setTitle("Selamat!")
-                setMessage("Akun $email telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda.")
-                setPositiveButton("Lanjut") { _ , _ ->
+                setTitle(getString(R.string.success_title))
+                setMessage(getString(R.string.register_success_message, email))
+                setPositiveButton(getString(R.string.continue_button)) { _ , _ ->
                     finish()
                 }
                 create()

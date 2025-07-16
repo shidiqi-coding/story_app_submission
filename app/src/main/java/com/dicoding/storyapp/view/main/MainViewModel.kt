@@ -17,17 +17,28 @@ class MainViewModel(private val repository: StoryRepository): ViewModel(){
         val loading : LiveData<Boolean> = _loading
 
 
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> = _errorMessage
+
+
     fun fetchMainStories() {
         _loading.value = true
-        viewModelScope.launch{
+        viewModelScope.launch {
             try {
                 val result = repository.getStories()
-                _storyList.value = result
+                _storyList.value = result ?: emptyList()
+            } catch (e: Exception) {
+                _errorMessage.value = e.message ?: "Terjadi kesalahan saat memuat data"
+                _storyList.value = emptyList()
             } finally {
                 _loading.value = false
             }
         }
     }
+
+//    suspend fun logout() {
+//        userPreference.logout()
+//    }
 
 
 }

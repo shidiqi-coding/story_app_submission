@@ -6,7 +6,6 @@
     import com.dicoding.storyapp.data.pref.UserModel
     import com.dicoding.storyapp.data.pref.UserPreference
     import com.dicoding.storyapp.data.response.ListStoryItem
-    import com.dicoding.storyapp.data.response.LoginResponse
     import com.dicoding.storyapp.data.response.UploadResponse
     import com.dicoding.storyapp.data.retrofit.ApiService
     import com.google.gson.Gson
@@ -44,6 +43,24 @@
         }
 
 
+        fun register(name: String, email: String, password: String) = liveData {
+            emit(ResultState.Loading)
+            try {
+                val response = apiService.register(name, email, password)
+                val error = response.error ?: true
+                if (!error) {
+                    emit(ResultState.Success(response.message ?: "Registrasi berhasil"))
+                } else {
+                    emit(ResultState.Error(response.message ?: "Registrasi gagal"))
+                }
+            } catch (e: HttpException) {
+                val errorMsg = e.response()?.errorBody()?.string()
+                emit(ResultState.Error(errorMsg ?: "Terjadi kesalahan jaringan"))
+            }
+        }
+
+
+
 
 
 
@@ -72,8 +89,15 @@
         suspend fun getStories(): List<ListStoryItem> {
             val user = userPreference.getSession().first()
             val token = "Bearer ${user.token}"
-            val response = apiService.getStories(token)
-            return response.listStory?.filterNotNull() ?: emptyList()
+
+            return try {
+                val response = apiService.getStories(token)
+                response.listStory?.filterNotNull() ?: emptyList()
+            } catch (e: HttpException) {
+                throw Exception("Terjadi kesalahan server: ${e.code()} ${e.message()}")
+            } catch (_: java.io.IOException) {
+                throw Exception("Koneksi ke server gagal. Periksa jaringan Anda.")
+            }
         }
 
         suspend fun saveSession(user: UserModel) {

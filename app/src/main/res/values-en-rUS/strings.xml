@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">CeritaKita</string>
+
+    <string name="welcomeText">Welcome To CeritaKita</string>
+    <string name="welcomeDesc">Are you ready to share your stories or daily experiences, whether about vacations, career,
+and other interesting experiences?</string>
+
+    <string name="login">Log In</string>
+    <string name="register">Register </string>
+
+    <string name="loginText">Welcome </string>
+    <string name="loginDesc">Enter your Account</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="username_input">Enter your email account</string>
+    <string name="password_input">Enter your Password</string>
+    <string name="username_register">FullName</string>
+    <string name="password_register">Password</string>
+    <string name="email_register">Email</string>
+
+    <string name="register_title">Please complete your personal data</string>
+    <string name="username_register_input">Enter your FullName</string>
+    <string name="email_register_input">Enter your Email Account</string>
+    <string name="password_register_input">Enter your password</string>
+
+
+
+    <string name="error_password">Password must not be less than 8 characters</string>
+
+
+    <string name="list_description">Description</string>
+
+    <string name="setting">Settings</string>
+    <string name="logout">Log Out</string>
+    <string name="back_button">back/n</string>
+    <string name="greeting">Hello %1$s, welcome to CeritaKita</string>
+    <string name="email_empty">Email must not be empty</string>
+    <string name="email_invalid">Invalid Format Email</string>
+    <string name="password_empty">Password must not be empty</string>
+    <string name="success_title">congratulations!</string>
+    <string name="login_success_message">You Have Successfully logged in. Are you ready to share your story?</string>
+    <string name ="register_success_message">Account %1$s has been successfully created. Let\'s share your stories and experiences</string>
+    <string name="continue_button">continue</string>
+    <string name="login_failed_title">Login Failed</string>
+
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+
+    <string name="appearance">Appearance</string>
+    <string name="apperance_subtitle">Select Theme on your device</string>
+    <string name="add_story">Add Story</string>
+    <string name="empty_image_warning">Please enter an image first</string>
+</resources>
