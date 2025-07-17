@@ -10,21 +10,19 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.ViewModelFactory
+import com.dicoding.storyapp.data.ResultState
 import com.dicoding.storyapp.databinding.ActivityRegisterBinding
 import com.dicoding.storyapp.view.WelcomeActivity
 import com.dicoding.storyapp.R
 
-
 class RegisterActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<RegisterViewModel> {
-        ViewModelFactory.getInstance(this)
-    }
-
     private lateinit var binding: ActivityRegisterBinding
-
     private var isPasswordVisible = false
 
+    private val viewModel: RegisterViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         setupTogglePassword()
 
         binding.btnRegBack.setOnClickListener {
-            val intent = Intent(this , WelcomeActivity::class.java)
+            val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -48,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN ,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
@@ -57,65 +55,68 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.buttonRegister.setOnClickListener {
-//            val name = binding.nameInput.text.toString()
-            val email = binding.emailInput.text.toString()
-           // val password = binding.passwordInput.text.toString()
+            val name = binding.UsernameInput.text.toString().trim()
+            val email = binding.emailInput.text.toString().trim()
+            val password = binding.passwordInput.text.toString().trim()
 
-            AlertDialog.Builder(this).apply {
-                setTitle(getString(R.string.success_title))
-                setMessage(getString(R.string.register_success_message, email))
-                setPositiveButton(getString(R.string.continue_button)) { _ , _ ->
-                    finish()
-                }
-                create()
-                show()
+            if (name.isEmpty()) {
+                binding.UsernameInput.error = "Nama tidak boleh kosong"
+                return@setOnClickListener
             }
 
-//            lifecycleScope.launch {
-//                try {
-//                    val response = registerViewModel.register(name, email, password)
-//                    if (!response.error) {
-//                        AlertDialog.Builder(this@RegisterActivity).apply {
-//                            setTitle("Selamat!")
-//                            setMessage("Akun $email telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda.")
-//                            setPositiveButton("Lanjut") { _, _ ->
-//                                finish()
-//                            }
-//                            show()
-//                        }
-//                    } else {
-//                        showErrorDialog(response.message)
-//                    }
-//                } catch (e: HttpException) {
-//                    val jsonInString = e.response()?.errorBody()?.string()
-//                    val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-//                    showErrorDialog(errorBody.message)
-//                }
-//            }
+            if (email.isEmpty()) {
+                binding.emailInput.error = "Email tidak boleh kosong"
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                binding.passwordInput.error = "Password tidak boleh kosong"
+                return@setOnClickListener
+            }
+
+            viewModel.register(name, email, password).observe(this) { result ->
+                when (result) {
+                    is ResultState.Loading -> {
+                        // Optional: tampilkan loading spinner
+                    }
+
+                    is ResultState.Success -> {
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Registrasi Berhasil")
+                            setMessage("Akun $email telah berhasil dibuat. Silakan login.")
+                            setPositiveButton("Lanjut") { _, _ ->
+                                finish()
+                            }
+                            show()
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Registrasi Gagal")
+                            setMessage(result.error)
+                            setPositiveButton("OK", null)
+                            show()
+                        }
+                    }
+                }
+            }
         }
     }
 
-//    private fun showErrorDialog(message: String) {
-//        AlertDialog.Builder(this).apply {
-//            setTitle("Registrasi Gagal")
-//            setMessage(message)
-//            setPositiveButton("OK", null)
-//            show()
-//        }
-//    }
-
-    private fun setupTogglePassword(){
-        binding.ivToggleRegPassword.setOnClickListener{
+    private fun setupTogglePassword() {
+        binding.ivToggleRegPassword.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
-            if(isPasswordVisible) {
-                binding.passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            if (isPasswordVisible) {
+                binding.passwordInput.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 binding.ivToggleRegPassword.setImageResource(R.drawable.ic_visible)
             } else {
-                binding.passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.passwordInput.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 binding.ivToggleRegPassword.setImageResource(R.drawable.ic_visibility_off)
             }
             binding.passwordInput.setSelection(binding.passwordInput.text?.length ?: 0)
         }
-
     }
 }

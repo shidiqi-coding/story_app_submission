@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.btnLogBack.setOnClickListener {
-            val intent = Intent(this, WelcomeActivity::class.java)
+            val intent = Intent(this , WelcomeActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
             if (!isValid) return@setOnClickListener
 
 
-            viewModel.login(email, password).observe(this) { result ->
+            viewModel.login(email , password).observe(this) { result ->
                 when (result) {
                     is ResultState.Loading -> {
                         binding.loginPB.visibility = View.VISIBLE
@@ -106,14 +106,21 @@ class LoginActivity : AppCompatActivity() {
                     is ResultState.Success -> {
                         binding.loginPB.visibility = View.GONE
                         val user = result.data
-                        viewModel.saveSession(UserModel(user.name!!, user.token!!))
+                        viewModel.saveSession(
+                            UserModel(
+                                email = email ,
+                                token = user.token ?: "" ,
+                                isLogin = true
+                            )
+                        )
 
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.success_title))
                             setMessage(getString(R.string.login_success_message))
-                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            setPositiveButton(getString(R.string.continue_button)) { _ , _ ->
+                                val intent = Intent(this@LoginActivity , MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                 startActivity(intent)
                                 finish()
                             }
@@ -126,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.login_failed_title))
                             setMessage(result.error)
-                            setPositiveButton("OK", null)
+                            setPositiveButton(getString(R.string.ok_button) , null)
                             show()
                         }
                     }

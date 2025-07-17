@@ -36,6 +36,10 @@ class MainViewModel(private val repository: StoryRepository): ViewModel(){
         }
     }
 
+    fun clearError() {
+        _errorMessage.value = null
+    }
+
 //    suspend fun logout() {
 //        userPreference.logout()
 //    }
