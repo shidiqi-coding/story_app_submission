@@ -9,7 +9,7 @@ import com.dicoding.storyapp.view.main.MainViewModel
 import com.dicoding.storyapp.view.newstory.NewStoryViewModel
 
 
-class ViewModelFactory(private val repository: StoryRepository) :
+class ViewModelFactory(private val repository: StoryRepository, private val context: Context) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -45,7 +45,7 @@ class ViewModelFactory(private val repository: StoryRepository) :
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
+                    INSTANCE = ViewModelFactory(Injection.provideRepository(context), context)
                 }
             }
             return INSTANCE as ViewModelFactory

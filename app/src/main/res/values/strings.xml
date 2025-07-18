@@ -40,6 +40,7 @@
     <string name ="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
     <string name="continue_button">Lanjut</string>
     <string name="login_failed_title">Login Gagal</string>
+    <string name="error_parse_message">Terjadi kesalahan saat parsing error</string>
     <string name="ok_button">OK</string>
 
     <string name="upload">Upload</string>
@@ -48,7 +49,7 @@
     <string name="description">Description</string>
 
     <string name="appearance">Tampilan</string>
-    <string name="apperance_subtitle">Pilih Tema pada perangkat Anda</string>
+    <string name="appearance_subtitle">Pilih Tema pada perangkat Anda</string>
     <string name="add_story">Tambah Cerita</string>
     <string name="empty_image_warning">Mohon masukkan gambar terlebih dahulu</string>
 

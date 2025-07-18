@@ -1,73 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view_story"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
-    card_view:cardCornerRadius="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:padding="8dp">
-
 
         <ImageView
             android:id="@+id/img_story"
-            android:layout_width="380dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/rounded_corner"
-            card_view:cardCornerRadius="16dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.0"
-            tools:ignore="ContentDescription"
-            tools:src="@tools:sample/backgrounds/scenic" />
-        
-        
+            tools:src="@tools:sample/backgrounds/scenic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/tv_name_story"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_story"
-            android:paddingTop="4dp"
-            android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/img_story"
-            card_view:layout_constraintVertical_bias="0.470"
+            android:textAlignment="center"
+            android:paddingTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/img_story"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="name"/>
-        
+
         <TextView
             android:id="@+id/tv_summary_story"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="5"
-            android:text="@string/list_description"
             android:textAlignment="center"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_name_story"
-            card_view:layout_constraintHorizontal_bias="0.386"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_name_story"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_name_story"/>
-
-
-
+            android:text="@string/description"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_story"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

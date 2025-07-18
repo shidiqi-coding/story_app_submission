@@ -12,6 +12,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.dicoding.storyapp.ViewModelFactory
@@ -120,7 +121,7 @@ class NewStoryActivity : AppCompatActivity() {
 //            }
 //
 
-            viewModel.uploadImage(imageFile , description).observe(this) { result ->
+            viewModel.uploadImage(imageFile , description, this).observe(this) { result ->
                 if (result != null) {
                     when (result) {
                         is ResultState.Loading -> {

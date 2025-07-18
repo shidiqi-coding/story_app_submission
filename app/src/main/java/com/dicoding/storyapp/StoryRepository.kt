@@ -1,6 +1,7 @@
 package com.dicoding.storyapp
 
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.dicoding.storyapp.data.ResultState
@@ -62,7 +63,7 @@ class StoryRepository(
     }
 
 
-    fun uploadImage(imageFile: File, description: String) = liveData {
+    fun uploadImage(imageFile: File, description: String, context: Context) = liveData {
         emit(ResultState.Loading)
 
         val user = userPreference.getSession().first()
@@ -97,7 +98,7 @@ class StoryRepository(
             val errorResponse = try {
                 Gson().fromJson(errorBody, UploadResponse::class.java)
             } catch (ex: Exception) {
-                UploadResponse(error = true, message = "Terjadi kesalahan saat parsing error")
+                UploadResponse(error = true, message = context.getString(R.string.error_parse_message))
             }
 
             emit(ResultState.Error(errorResponse.message ?: "Terjadi kesalahan saat upload"))

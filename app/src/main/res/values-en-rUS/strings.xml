@@ -42,6 +42,8 @@ and other interesting experiences?</string>
     <string name ="register_success_message">Account %1$s has been successfully created. Let\'s share your stories and experiences</string>
     <string name="continue_button">continue</string>
     <string name="login_failed_title">Login Failed</string>
+    <string name="error_parse_message">An error occurred while parsing the error response</string>
+
     <string name="ok_button">OK</string>
 
     <string name="upload">Upload</string>
@@ -50,7 +52,7 @@ and other interesting experiences?</string>
     <string name="description">Description</string>
 
     <string name="appearance">Appearance</string>
-    <string name="apperance_subtitle">Select Theme on your device</string>
+    <string name="appearance_subtitle">Select Theme on your device</string>
     <string name="add_story">Add Story</string>
     <string name="empty_image_warning">Please enter an image first</string>
 </resources>
