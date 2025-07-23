@@ -1,0 +1,6 @@
+<resources>
+
+    <color name ="icon_color">#FFFFFF</color>
+    <color name ="button_color">#FF7F00</color>
+    <color name ="text_color">@color/white</color>
+</resources>
