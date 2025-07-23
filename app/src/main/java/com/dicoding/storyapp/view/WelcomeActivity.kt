@@ -52,13 +52,13 @@ class WelcomeActivity : AppCompatActivity() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val login = ObjectAnimator.ofFloat(binding.loginButton , View.ALPHA , 1f).setDuration(100)
+        val login = ObjectAnimator.ofFloat(binding.loginButton , View.ALPHA , 1f).setDuration(500)
         val register =
-            ObjectAnimator.ofFloat(binding.registerButton , View.ALPHA , 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.registerButton , View.ALPHA , 1f).setDuration(500)
         val welcomeTitle =
-            ObjectAnimator.ofFloat(binding.welcomeTitle , View.ALPHA , 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.welcomeTitle , View.ALPHA , 1f).setDuration(500)
         val welcomeDesc =
-            ObjectAnimator.ofFloat(binding.welcomeDesc , View.ALPHA , 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.welcomeDesc , View.ALPHA , 1f).setDuration(500)
 
 
         val together = AnimatorSet().apply {

@@ -46,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/storyImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/galleryButton"
+            app:backgroundTint="@color/orange"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp" />
 
@@ -58,6 +59,7 @@
             app:layout_constraintTop_toBottomOf="@id/storyImageView"
             app:layout_constraintStart_toEndOf="@id/cameraButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:backgroundTint="@color/orange"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp" />
 
@@ -86,6 +88,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:backgroundTint="@color/orange"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

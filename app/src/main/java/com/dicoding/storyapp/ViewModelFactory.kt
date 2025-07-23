@@ -3,13 +3,15 @@ package com.dicoding.storyapp
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.storyapp.view.setting.SettingPreferences
 import com.dicoding.storyapp.view.authenticator.login.LoginViewModel
 import com.dicoding.storyapp.view.authenticator.register.RegisterViewModel
 import com.dicoding.storyapp.view.main.MainViewModel
 import com.dicoding.storyapp.view.newstory.NewStoryViewModel
+import com.dicoding.storyapp.view.setting.SettingViewModel
 
 
-class ViewModelFactory(private val repository: StoryRepository, private val context: Context) :
+class ViewModelFactory(private val repository: StoryRepository, private val pref: SettingPreferences) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -33,6 +35,10 @@ class ViewModelFactory(private val repository: StoryRepository, private val cont
                 NewStoryViewModel(repository) as T
             }
 
+            modelClass.isAssignableFrom(SettingViewModel::class.java) -> {
+                SettingViewModel(pref) as T
+            }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -41,14 +47,14 @@ class ViewModelFactory(private val repository: StoryRepository, private val cont
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
 
-        @JvmStatic
         fun getInstance(context: Context): ViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context), context)
-                }
+            return INSTANCE ?: synchronized(this) {
+                val repository = Injection.provideRepository(context)
+                val pref = SettingPreferences.getInstance(context)
+                INSTANCE = ViewModelFactory(repository, pref)
+                INSTANCE!!
             }
-            return INSTANCE as ViewModelFactory
         }
     }
+
 }

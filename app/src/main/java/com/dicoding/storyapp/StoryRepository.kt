@@ -3,6 +3,8 @@ package com.dicoding.storyapp
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.dicoding.storyapp.data.ResultState
 import com.dicoding.storyapp.data.pref.UserModel
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import okhttp3.MultipartBody
 import retrofit2.HttpException
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -63,50 +66,28 @@ class StoryRepository(
     }
 
 
-    fun uploadImage(imageFile: File, description: String, context: Context) = liveData {
+    fun uploadStory(
+        token: String,
+        image: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody? = null,
+        lon: RequestBody? = null
+    ): LiveData<ResultState<UploadResponse>> = liveData {
         emit(ResultState.Loading)
-
-        val user = userPreference.getSession().first()
-        val token = "Bearer ${user.token}"
-
-        // Logging
-        Log.d("UPLOAD", "Token: $token")
-        Log.d("UPLOAD", "Desc: $description")
-        Log.d("UPLOAD", "File exists: ${imageFile.exists()} size=${imageFile.length()}")
-
-        // Request body
-        val requestBody = description.toRequestBody("text/plain".toMediaType())
-        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-        val multipartBody = MultipartBody.Part.createFormData(
-            "photo", imageFile.name, requestImageFile
-        )
-
-        val apiService = ApiConfig.getApiService(token)
-
         try {
-            val response = apiService.uploadStory(
-                token,
-                multipartBody,
-                requestBody
-            )
-            emit(ResultState.Success(response))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            Log.e("UPLOAD_ERROR", "HTTP Exception: ${e.code()}", e)
-            Log.e("UPLOAD_ERROR", "Error body: $errorBody")
-
-            val errorResponse = try {
-                Gson().fromJson(errorBody, UploadResponse::class.java)
-            } catch (ex: Exception) {
-                UploadResponse(error = true, message = context.getString(R.string.error_parse_message))
+            val response = apiService.uploadStory("Bearer $token", image, description, lat, lon)
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                emit(ResultState.Success(body))
+            } else {
+                emit(ResultState.Error(response.message()))
             }
-
-            emit(ResultState.Error(errorResponse.message ?: "Terjadi kesalahan saat upload"))
-        } catch (e: Exception) {
-            Log.e("UPLOAD_ERROR", "Exception: ${e.message}", e)
-            emit(ResultState.Error(e.message ?: "Terjadi kesalahan tidak dikenal"))
+        } catch (e: HttpException) {
+            val errorMessage = e.response()?.errorBody()?.string() ?: "Unknown error"
+            emit(ResultState.Error(errorMessage))
         }
     }
+
     suspend fun getStories(): List<ListStoryItem> {
         val user = userPreference.getSession().first()
         val token = "Bearer ${user.token}"
@@ -126,8 +107,8 @@ class StoryRepository(
         userPreference.saveSession(user)
     }
 
-    fun getSession(): Flow<UserModel> {
-        return userPreference.getSession()
+    fun getSession(): LiveData<UserModel> {
+        return userPreference.getSession().asLiveData()
     }
 
     suspend fun logout() {

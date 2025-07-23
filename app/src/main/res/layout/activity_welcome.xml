@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,88 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".view.WelcomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp">
+
 
     <ImageView
         android:id="@+id/headerShape"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/top_curve_bg"
         tools:ignore="ContentDescription" />
 
 
-    <ImageView
+     <ImageView
         android:id="@+id/welcomeImage"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="16dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+         android:layout_marginBottom="20dp"
         android:src="@drawable/men_reading_book"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitCenter"
         tools:ignore="ContentDescription" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="320dp">
+    </FrameLayout>
 
         <TextView
             android:id="@+id/welcomeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:alpha="0"
             android:text="@string/welcomeText"
+            android:alpha="0"
             android:textColor="@color/orange"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:alpha="100"/>
+            tools:alpha="500"/>
 
         <TextView
             android:id="@+id/welcomeDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:alpha="0"
             android:text="@string/welcomeDesc"
             android:textAlignment="center"
-            android:textSize="14sp"
-            tools:alpha="100"/>
+            android:textSize="14sp" />
 
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/button_rounded_orange"
-            android:alpha="0"
             android:text="@string/login"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            tools:alpha="100"/>
+            android:textStyle="bold" />
 
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:alpha="0"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_border_orange"
             android:text="@string/register"
             android:textColor="@color/orange"
-            android:textStyle="bold"
-            tools:alpha="100"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

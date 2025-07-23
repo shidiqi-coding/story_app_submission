@@ -20,7 +20,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_capture_photo"/>
+        app:srcCompat="@drawable/ic_capture_photo"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/switchCamera"

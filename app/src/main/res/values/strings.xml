@@ -31,11 +31,12 @@
     <string name="setting">Pengaturan</string>
     <string name="logout">Keluar</string>
     <string name="back_button">back/n</string>
-    <string name="greeting">Halo %1$s, Selamat datang di CeritaKita</string>
+    <string name="greeting">Hai %1$s, Selamat datang</string>
     <string name="email_empty">Email tidak boleh kosong</string>
     <string name="email_invalid">Format email tidak valid</string>
     <string name="password_empty">Password tidak boleh kosong</string>
     <string name="success_title">Selamat!</string>
+    <string name="register_failed">Registrasi gagal</string>
     <string name="login_success_message">Anda berhasil login. Apakah Anda siap untuk membagi cerita?</string>
     <string name ="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
     <string name="continue_button">Lanjut</string>
@@ -43,14 +44,25 @@
     <string name="error_parse_message">Terjadi kesalahan saat parsing error</string>
     <string name="ok_button">OK</string>
 
-    <string name="upload">Upload</string>
-    <string name="camera">Camera</string>
-    <string name="gallery">Gallery</string>
-    <string name="description">Description</string>
+    <string name="logout_popup_text">Konfirmasi Logout</string>
+    <string name="logout_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes_button">Ya</string>
+    <string name="cancel_button">Batal</string>
+
+    <string name="upload">Unggah</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description">Deskripsi</string>
 
     <string name="appearance">Tampilan</string>
+    <string name="choose_theme">Pilih tema</string>
+    <string name="device_theme">"Tema perangkat sistem"</string>
+    <string name="light_theme">Tema Terang</string>
+    <string name="dark_theme">Tema Gelap</string>
+    <string name="upload_success">berhasil diunggah</string>
     <string name="appearance_subtitle">Pilih Tema pada perangkat Anda</string>
     <string name="add_story">Tambah Cerita</string>
     <string name="empty_image_warning">Mohon masukkan gambar terlebih dahulu</string>
+    <string name="empty_description_warning">Mohon masukkan catatan terlebih dahulu</string>
 
 </resources>

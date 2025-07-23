@@ -26,7 +26,7 @@ class MainViewModel(private val repository: StoryRepository): ViewModel(){
         viewModelScope.launch {
             try {
                 val result = repository.getStories()
-                _storyList.value = result ?: emptyList()
+                _storyList.value = result
             } catch (e: Exception) {
                 _errorMessage.value = e.message ?: "Terjadi kesalahan saat memuat data"
                 _storyList.value = emptyList()

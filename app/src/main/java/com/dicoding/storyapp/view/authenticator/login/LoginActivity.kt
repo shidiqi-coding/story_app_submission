@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.core.content.ContextCompat
 import com.dicoding.storyapp.ViewModelFactory
 import com.dicoding.storyapp.data.ResultState
 import com.dicoding.storyapp.data.pref.UserModel
@@ -72,7 +73,6 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonLogin.setOnClickListener {
             val email = binding.emailInput.text.toString().trim()
             val password = binding.passwordInput.text.toString().trim()
-
             var isValid = true
 
 
@@ -96,51 +96,60 @@ class LoginActivity : AppCompatActivity() {
 
             if (!isValid) return@setOnClickListener
 
-
-            viewModel.login(email , password).observe(this) { result ->
+            viewModel.login(email, password).observe(this) { result ->
                 when (result) {
                     is ResultState.Loading -> {
-                        binding.loginPB.visibility = View.VISIBLE
+                        binding.loadingOverlay.visibility = View.VISIBLE
                     }
 
                     is ResultState.Success -> {
-                        binding.loginPB.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         val user = result.data
+
+
                         viewModel.saveSession(
                             UserModel(
-                                email = email ,
-                                token = user.token ?: "" ,
-                                isLogin = true
+                                email = email,
+                                token = user.token ?: "",
+                                isLogin = true,
+                                name = user.name ?: ""
                             )
+
                         )
 
-                        AlertDialog.Builder(this).apply {
+
+                        val dialog = AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.success_title))
                             setMessage(getString(R.string.login_success_message))
-                            setPositiveButton(getString(R.string.continue_button)) { _ , _ ->
-                                val intent = Intent(this@LoginActivity , MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                                 finish()
                             }
-                            show()
+                        }.create()
+
+                        dialog.setOnShowListener {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                .setTextColor(ContextCompat.getColor(this@LoginActivity, R.color.button_color))
                         }
+
+                        dialog.show()
                     }
 
                     is ResultState.Error -> {
-                        binding.loginPB.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.login_failed_title))
                             setMessage(result.error)
-                            setPositiveButton(getString(R.string.ok_button) , null)
-                            show()
-                        }
+                            setPositiveButton(getString(R.string.ok_button), null)
+                        }.show()
                     }
                 }
             }
         }
     }
+
 
     private fun setupTogglePassword() {
         binding.ivToggleLogPassword.setOnClickListener {

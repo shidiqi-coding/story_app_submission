@@ -8,11 +8,25 @@
     tools:context=".view.main.MainActivity">
 
 
+
+    <TextView
+        android:id="@+id/greetingId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:text="@string/greeting"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStoryList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    
+        android:layout_height="match_parent"
+        android:layout_marginTop="35dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="67dp" />
+
     <ProgressBar
         android:id="@+id/menuPB"
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
@@ -36,6 +50,7 @@
         android:contentDescription="@string/add_story"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
 

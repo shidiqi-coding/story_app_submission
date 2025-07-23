@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".view.authenticator.login.LoginActivity">
 
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp">
 
     <ImageView
         android:id="@+id/headerShapeLogin"
@@ -38,56 +42,40 @@
         android:id="@+id/loginImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/headerShapeLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_read"
         tools:ignore="ContentDescription" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerShapeLogin">
 
-        <ProgressBar
-            android:id="@+id/loginPB"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/orange"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+
+
 
         <TextView
             android:id="@+id/titleLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:padding="12dp"
             android:text="@string/welcomeText"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/headerShapeLogin" />
 
         <TextView
             android:id="@+id/loginDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="12dp"
             android:text="@string/loginDesc"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleLogin" />
 
@@ -95,7 +83,8 @@
             android:id="@+id/usernameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
             android:text="@string/username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginDesc" />
@@ -104,11 +93,14 @@
             android:id="@+id/inputContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/usernameText">
+            app:layout_constraintTop_toBottomOf="@id/usernameText"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
             <!-- Email Input -->
             <LinearLayout
@@ -135,6 +127,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:textColorHint="#666666"
+                    android:textColor="@color/text_color"
                     android:hint="@string/username_input"
                     android:inputType="textEmailAddress"
                     android:textSize="16sp"
@@ -149,7 +142,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/password"/>
 
-            <!-- Password Input -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,6 +168,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="@string/password_input"
+                    android:textColor="@color/text_color"
                     android:inputType="textPassword"
                     android:textColorHint="#666666"
                     android:textSize="16sp"
@@ -197,14 +191,38 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="32dp"
-            android:padding="12dp"
-            android:minHeight="48dp"
-            android:text="@string/login"
             android:background="@drawable/rounded_corner"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:backgroundTint="@color/orange"
             app:layout_constraintTop_toBottomOf="@id/inputContainer" />
+
+        <FrameLayout
+            android:id="@+id/loadingOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#80000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <ProgressBar
+                android:id="@+id/loginPB"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/orange" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

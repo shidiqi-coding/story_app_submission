@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -77,12 +78,14 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.register(name, email, password).observe(this) { result ->
                 when (result) {
                     is ResultState.Loading -> {
-                        // Optional: tampilkan loading spinner
+                        binding.loadingOverlay.visibility = View.VISIBLE
                     }
 
                     is ResultState.Success -> {
+                        binding.loadingOverlay.visibility = View.GONE
+
                         AlertDialog.Builder(this).apply {
-                            setTitle("Registrasi Berhasil")
+                            setTitle(getString(R.string.register_success_message))
                             setMessage("Akun $email telah berhasil dibuat. Silakan login.")
                             setPositiveButton("Lanjut") { _, _ ->
                                 finish()
@@ -93,9 +96,9 @@ class RegisterActivity : AppCompatActivity() {
 
                     is ResultState.Error -> {
                         AlertDialog.Builder(this).apply {
-                            setTitle("Registrasi Gagal")
+                            setTitle(getString(R.string.register_failed))
                             setMessage(result.error)
-                            setPositiveButton("OK", null)
+                            setPositiveButton(getString(R.string.ok_button), null)
                             show()
                         }
                     }

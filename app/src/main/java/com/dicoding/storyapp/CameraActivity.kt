@@ -52,7 +52,8 @@ class CameraActivity : AppCompatActivity() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get() as ProcessCameraProvider
+            val cameraProvider: ProcessCameraProvider =
+                cameraProviderFuture.get() as ProcessCameraProvider
             val preview = Preview.Builder()
                 .build()
                 .also {
@@ -100,8 +101,8 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity ,
-                        "Gagal mengupload gambar",
-                                Toast.LENGTH_SHORT
+                        "Gagal mengupload gambar" ,
+                        Toast.LENGTH_SHORT
                     ).show()
 
                     Log.e(TAG , "onError: ${exc.message}")
@@ -112,13 +113,13 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-    private fun hideSystemUI(){
+    private fun hideSystemUI() {
         @Suppress("DEPRECATION")
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
@@ -126,12 +127,12 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private val orientationEventListener by lazy {
-        object : OrientationEventListener(this){
-            override fun onOrientationChanged(orientaton: Int){
-                if(orientaton == ORIENTATION_UNKNOWN){
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientaton: Int) {
+                if (orientaton == ORIENTATION_UNKNOWN) {
                     return
                 }
-                val rotation = when (orientaton){
+                val rotation = when (orientaton) {
                     in 45 until 135 -> Surface.ROTATION_270
                     in 135 until 225 -> Surface.ROTATION_180
                     in 225 until 315 -> Surface.ROTATION_90
@@ -144,12 +145,12 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart(){
+    override fun onStart() {
         super.onStart()
         orientationEventListener.enable()
     }
 
-    override fun onStop(){
+    override fun onStop() {
         super.onStop()
         orientationEventListener.disable()
     }
