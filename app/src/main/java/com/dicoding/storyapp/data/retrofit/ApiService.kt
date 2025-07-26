@@ -7,9 +7,7 @@ import com.dicoding.storyapp.data.response.StoryResponse
 import com.dicoding.storyapp.data.response.UploadResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.Response
-//import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Field
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -43,7 +41,10 @@ interface ApiService {
     ): StoryResponse
 
     @GET("stories/{id}")
-     fun getStoriesDetail(@Path("id") id :String) : Call<DetailResponse>
+    suspend fun getStoriesDetail(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): DetailResponse
 
     @Multipart
     @POST("stories")

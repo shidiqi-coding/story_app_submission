@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.storyapp.R
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.dicoding.storyapp.ViewModelFactory
 import com.dicoding.storyapp.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -15,25 +17,42 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         val storyId = intent.getStringExtra(EXTRA_STORY_ID) ?: ""
+
+        val factory = ViewModelFactory.getInstance(applicationContext)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        setStoriesData()
+        viewModel.getDetailStory(storyId)
+        observeStory()
 
 
     }
 
 
-   private fun setStoriesData() {
+    private fun  observeStory() {
+        viewModel.detailStories.observe(this) { story ->
+            with(binding) {
+                binding.tvDetailName.text = story.name
+                binding.tvDetailDescription.text = story.description
 
-   }
+                Glide.with(this@DetailActivity)
+                    .load(story.photoUrl)
+                    .into(tvDetailImage)
+
+
+            }
+        }
+
+    }
 
 
     companion object {

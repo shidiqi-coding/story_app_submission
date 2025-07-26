@@ -59,6 +59,10 @@ and other interesting experiences?</string>
     <string name="description">Description</string>
 
     <string name="appearance">Appearance</string>
+    <string name="language">language</string>
+    <string name="language_system">Language System</string>
+    <string name="en_language">English</string>
+    <string name="id_language">Bahasa</string>
     <string name="choose_theme">Choose theme</string>
     <string name="device_theme">"System device theme"</string>
     <string name="light_theme">Light mode</string>

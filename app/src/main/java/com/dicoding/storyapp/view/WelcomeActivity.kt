@@ -10,7 +10,6 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.data.pref.UserPreference
-import com.dicoding.storyapp.data.pref.dataStore
 import com.dicoding.storyapp.databinding.ActivityWelcomeBinding
 import com.dicoding.storyapp.view.authenticator.login.LoginActivity
 import com.dicoding.storyapp.view.authenticator.register.RegisterActivity
@@ -28,7 +27,7 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userPref = UserPreference.getInstance(dataStore)
+        userPref = UserPreference.getInstance(this)
 
         CoroutineScope(Dispatchers.Main).launch {
             val session = userPref.getSession().first()

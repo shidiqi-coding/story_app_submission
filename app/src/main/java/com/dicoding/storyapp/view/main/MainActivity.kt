@@ -1,6 +1,8 @@
 package com.dicoding.storyapp.view.main
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,19 +12,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.dicoding.storyapp.data.pref.dataStore
-import com.dicoding.storyapp.data.pref.UserPreference
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
 import com.dicoding.storyapp.ViewModelFactory
-import com.dicoding.storyapp.view.setting.SettingPreferences
+import com.dicoding.storyapp.data.pref.UserPreference
+import com.dicoding.storyapp.data.pref.dataStore
 import com.dicoding.storyapp.databinding.ActivityMainBinding
 import com.dicoding.storyapp.view.WelcomeActivity
 import com.dicoding.storyapp.view.detail.DetailActivity
 import com.dicoding.storyapp.view.newstory.NewStoryActivity
 import com.dicoding.storyapp.view.setting.SettingActivity
+import com.dicoding.storyapp.view.setting.SettingPreferences
+import com.dicoding.storyapp.view.helper.LocaleHelper
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,31 +40,33 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListStoryAdapter
 
+
+    override fun attachBaseContext(newBase: Context?) {
+        val langCode = LocaleHelper.getSavedLanguage(newBase ?: return)
+        val contextWithLocale = LocaleHelper.applyLanguage(newBase, langCode)
+        super.attachBaseContext(contextWithLocale)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        setLocaleFromPreferences()
+
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val prefs = SettingPreferences.getInstance(this)
-        lifecycleScope.launch {
-            prefs.getThemeSetting().collect { themeValue ->
-                applyTheme(themeValue)
-            }
-        }
-
+        applyThemeFromPreferences()
         setupRecyclerView()
         observeView()
         setUpGreeting()
-        viewModel.fetchMainStories()
+        viewModel.getStories()
 
         binding.fabAddStory.setOnClickListener {
-            val intent = Intent(this , NewStoryActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, NewStoryActivity::class.java))
         }
     }
 
     private fun setUpGreeting() {
-        val userPref = UserPreference.getInstance(dataStore)
+        val userPref = UserPreference.getInstance(this)
         lifecycleScope.launch {
             userPref.getSession().collect { user ->
                 val greeting = getString(R.string.greeting, user.name)
@@ -69,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = ListStoryAdapter { storyId ->
-            DetailActivity.start(this , storyId)
+            DetailActivity.start(this, storyId)
         }
         binding.rvStoryList.layoutManager = LinearLayoutManager(this)
         binding.rvStoryList.adapter = adapter
@@ -86,37 +94,21 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this) { error ->
             if (!error.isNullOrEmpty()) {
-                Toast.makeText(this , error , Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                 viewModel.clearError()
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_list , menu)
-        if (menu != null) {
-            if (menu.javaClass.simpleName == "MenuBuilder") {
-                try {
-                    val method = menu.javaClass.getDeclaredMethod(
-                        "setOptionalIconsVisible" ,
-                        Boolean::class.javaPrimitiveType
-                    )
-                    method.isAccessible = true
-                    method.invoke(menu , true)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-
+        menuInflater.inflate(R.menu.menu_list, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_setting -> {
-                startActivity(Intent(this , SettingActivity::class.java))
+                startActivity(Intent(this, SettingActivity::class.java))
                 true
             }
 
@@ -133,19 +125,18 @@ class MainActivity : AppCompatActivity() {
         val alertDialog = AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.logout_popup_text))
             setMessage(getString(R.string.logout_message))
-            setPositiveButton(getString(R.string.yes_button)) { _ , _ ->
+            setPositiveButton(getString(R.string.yes_button)) { _, _ ->
                 lifecycleScope.launch {
-                    val userPref = UserPreference.getInstance(dataStore)
+                    val userPref = UserPreference.getInstance(this@MainActivity)
                     userPref.logout()
-                    val intent = Intent(this@MainActivity , WelcomeActivity::class.java)
+                    val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish()
                 }
             }
-            setNegativeButton(getString(R.string.cancel_button) , null)
+            setNegativeButton(getString(R.string.cancel_button), null)
         }.create()
-
 
         alertDialog.setOnShowListener {
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -158,23 +149,42 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private fun applyTheme(choice: Int) {
-        when (choice) {
-            0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    private fun applyThemeFromPreferences() {
+        val settingPref = SettingPreferences.getInstance(this)
+        lifecycleScope.launch {
+            settingPref.getThemeSetting().collect { theme ->
+                when (theme) {
+                    0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+            }
         }
+    }
+
+    private fun setLocaleFromPreferences() {
+        val settingPref = SettingPreferences.getInstance(this)
+        runBlocking {
+            val langCode = settingPref.getLanguageSetting().first() ?: "en"
+            setLocale(this@MainActivity, langCode)
+        }
+    }
+
+    private fun setLocale(context: Context, langCode: String) {
+        val locale = Locale(langCode)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getStories()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchMainStories()
-    }
-
-
 }

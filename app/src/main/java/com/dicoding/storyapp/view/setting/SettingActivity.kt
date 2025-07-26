@@ -1,19 +1,27 @@
 package com.dicoding.storyapp.view.setting
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.storyapp.R
-import androidx.lifecycle.ViewModelProvider
-import com.dicoding.storyapp.ViewModelFactory
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.dicoding.storyapp.R
+import com.dicoding.storyapp.ViewModelFactory
 import com.dicoding.storyapp.databinding.ActivitySettingBinding
+import com.dicoding.storyapp.view.helper.LocaleHelper
 
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
     private lateinit var viewModel: SettingViewModel
     private var currentThemeChoice: Int = 0
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase!!))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +34,7 @@ class SettingActivity : AppCompatActivity() {
         )[SettingViewModel::class.java]
 
 
-
-        viewModel.getThemeSettings().observe(this) { theme ->
+        viewModel.themeChoice.observe(this) { theme ->
             currentThemeChoice = theme
             binding.tvAppearanceSubtitle.text = when (theme) {
                 0 -> getString(R.string.device_theme)
@@ -37,14 +44,32 @@ class SettingActivity : AppCompatActivity() {
             }
         }
 
+
+        viewModel.languageSetting.observe(this) { lang ->
+            binding.tvLanguageSubtitle.text = when (lang) {
+                "en" -> getString(R.string.en_language)
+                "id" -> getString(R.string.id_language)
+                else -> getString(R.string.language_system)
+            }
+        }
+
+
         binding.appearanceLayout.setOnClickListener {
             showAppearanceDialog()
+        }
+
+
+        binding.localizationLayout.setOnClickListener {
+            showLanguageDialog()
         }
     }
 
     private fun showAppearanceDialog() {
-        val options = arrayOf(getString(R.string.device_theme),getString(R.string.light_theme), getString(R.string.dark_theme))
-//        val checkedItem = viewModel.themeChoice.value ?: 0
+        val options = arrayOf(
+            getString(R.string.device_theme),
+            getString(R.string.light_theme),
+            getString(R.string.dark_theme)
+        )
 
         val dialog = AlertDialog.Builder(this)
             .setTitle(getString(R.string.choose_theme))
@@ -58,11 +83,36 @@ class SettingActivity : AppCompatActivity() {
 
         dialog.setOnShowListener {
             val cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-            cancelButton.setTextColor(
-                ContextCompat.getColor(this, R.color.button_color)
-            )
+            cancelButton.setTextColor(ContextCompat.getColor(this, R.color.button_color))
         }
 
         dialog.show()
+    }
+
+    private fun showLanguageDialog() {
+        val options = arrayOf(
+            getString(R.string.language_system),
+            getString(R.string.en_language),
+            getString(R.string.id_language)
+        )
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.language))
+            .setItems(options) { _, which ->
+                val lang = when (which) {
+                    1 -> "en"
+                    2 -> "id"
+                    else -> null
+                }
+
+                viewModel.saveLanguageSetting(lang)
+                LocaleHelper.saveLanguage(this, lang)
+
+
+                val intent = Intent(this, SettingActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }
+            .show()
     }
 }

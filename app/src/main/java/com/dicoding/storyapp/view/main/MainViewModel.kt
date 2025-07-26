@@ -21,7 +21,7 @@ class MainViewModel(private val repository: StoryRepository): ViewModel(){
     val errorMessage: LiveData<String?> = _errorMessage
 
 
-    fun fetchMainStories() {
+    fun getStories() {
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -40,9 +40,7 @@ class MainViewModel(private val repository: StoryRepository): ViewModel(){
         _errorMessage.value = null
     }
 
-//    suspend fun logout() {
-//        userPreference.logout()
-//    }
+
 
 
 }

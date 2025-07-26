@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -21,6 +22,7 @@ import com.dicoding.storyapp.databinding.ActivityNewStoryBinding
 import com.dicoding.storyapp.getImageUri
 import com.dicoding.storyapp.reduceFileImage
 import com.dicoding.storyapp.uriToFile
+import com.dicoding.storyapp.view.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -50,7 +52,7 @@ class NewStoryActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[NewStoryViewModel::class.java]
 
         viewModel.getSession().observe(this) { user: UserModel ->
-            token = "Bearer ${user.token}"
+            token = user.token
         }
     }
 
@@ -83,15 +85,24 @@ class NewStoryActivity : AppCompatActivity() {
 
             viewModel.uploadStory(userToken, multipartImage, descRequestBody).observe(this) { result ->
                 when (result) {
-                    is ResultState.Loading -> showLoading(true)
+                    is ResultState.Loading -> {
+                        binding.loadingOverlay.visibility = View.VISIBLE
+
+                    }
                     is ResultState.Success -> {
                         showToast(getString(R.string.upload_success))
-                        showLoading(false)
-                        goBackWithResult()
+                        binding.loadingOverlay.visibility = View.GONE
+                        Toast.makeText(this, "Story uploaded successfully", Toast.LENGTH_SHORT).show()
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
                     }
                     is ResultState.Error -> {
                         showToast(result.error)
                         showLoading(false)
+                        Toast.makeText(this, "Upload failed: ${result.error}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -138,10 +149,10 @@ class NewStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun goBackWithResult() {
-        setResult(RESULT_OK)
-        finish()
-    }
+//    private fun goBackWithResult() {
+//        setResult(RESULT_OK)
+//        finish()
+//    }
 
     companion object {
         const val REQUEST_CAMERA_PERMISSION = 100

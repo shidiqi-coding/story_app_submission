@@ -55,6 +55,10 @@
     <string name="description">Deskripsi</string>
 
     <string name="appearance">Tampilan</string>
+    <string name="language">Bahasa</string>
+    <string name="language_system">Bahasa System</string>
+    <string name="en_language">Bahasa Inggris</string>
+    <string name="id_language">Bahasa Indonesia</string>
     <string name="choose_theme">Pilih tema</string>
     <string name="device_theme">"Tema perangkat sistem"</string>
     <string name="light_theme">Tema Terang</string>

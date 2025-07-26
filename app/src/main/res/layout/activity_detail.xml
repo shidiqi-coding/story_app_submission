@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
     tools:context=".view.detail.DetailActivity">
 
     <LinearLayout
@@ -14,12 +11,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="UselessParent">
-            
-            
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/tv_detail_image"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_margin="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@tools:sample/avatars"
+                tools:ignore="ContentDescription" />
+
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
@@ -27,51 +35,33 @@
                 android:padding="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_back_button"
-                app:tint="@color/icon_color"
-                tools:ignore="ContentDescription" />
-            
-            
-            <ImageView
-                android:id="@+id/tv_detail_image"
-                android:layout_width="400dp"
-                android:layout_height="300dp"
-                android:layout_margin="75dp"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
+                app:tint="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="ContentDescription" />
-            
-            
+
             <TextView
-                android:id="@+id/detailTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_detail_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteY="291dp"
-                tools:text="name"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        </FrameLayout>
-        
         <TextView
             android:id="@+id/tv_detail_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:layout_margin="8dp"
             android:text="@string/list_description"
             android:textSize="16sp"/>
-
-
-
-
     </LinearLayout>
 
 </ScrollView>
