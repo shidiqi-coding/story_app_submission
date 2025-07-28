@@ -6,6 +6,7 @@ import com.dicoding.storyapp.R
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
 import com.bumptech.glide.Glide
@@ -29,17 +30,26 @@ class StackRemoteViewsFactory(private val context: Context) : RemoteViewsFactory
     override fun getCount(): Int = storyList.size
 
     override fun onDataSetChanged() {
+        Log.d("RemoteViewsFactory", "onDataSetChanged: dipanggil")
+
         try {
             val pref = SettingPreferences.getInstance(context)
             val token = runBlocking {
                 pref.getToken().first()
             }
+            Log.d("RemoteViewsFactory", "Token: $token")
+
             val apiService = ApiConfig.getApiService()
             val response = runBlocking { apiService.getStories("Bearer $token") }
+
+            Log.d("RemoteViewsFactory", "Jumlah cerita diterima: ${response.listStory?.size ?: 0}")
+
+
+
             storyList.clear()
             storyList.addAll(response.listStory ?: emptyList())
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("RemoteViewsFactory", "Gagal memuat cerita", e)
         }
     }
 

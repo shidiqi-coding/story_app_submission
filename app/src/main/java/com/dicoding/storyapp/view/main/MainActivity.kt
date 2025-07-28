@@ -1,9 +1,11 @@
 package com.dicoding.storyapp.view.main
 
 import android.content.Context
+
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
 import com.dicoding.storyapp.ViewModelFactory
 import com.dicoding.storyapp.data.pref.UserPreference
-import com.dicoding.storyapp.data.pref.dataStore
 import com.dicoding.storyapp.databinding.ActivityMainBinding
 import com.dicoding.storyapp.view.WelcomeActivity
 import com.dicoding.storyapp.view.detail.DetailActivity
@@ -66,12 +67,11 @@ class MainActivity : AppCompatActivity() {
 
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
-                binding.fabAddStory,
-                "fab_transition"
+                androidx.core.util.Pair(binding.fabAddStory, "fab_add_story")
             )
 
             startActivity(intent, options.toBundle())
-        }
+            }
     }
 
     private fun setUpGreeting() {
@@ -87,14 +87,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = ListStoryAdapter { storyId, imageView, nameView, descView ->
             val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra("EXTRA_ID", storyId)
+                putExtra(DetailActivity.EXTRA_STORY_ID, storyId)
             }
 
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
-                androidx.core.util.Pair(imageView, imageView.transitionName),
-                androidx.core.util.Pair(nameView, nameView.transitionName),
-                androidx.core.util.Pair(descView, descView.transitionName)
+                androidx.core.util.Pair(imageView as View, imageView.transitionName),
+                androidx.core.util.Pair(nameView as View, nameView.transitionName),
+                androidx.core.util.Pair(descView as View, descView.transitionName)
             )
 
             startActivity(intent, options.toBundle())
@@ -123,6 +123,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_list, menu)
+        if (menu != null && menu.javaClass.simpleName == "MenuBuilder") {
+            try {
+                val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
+                method.isAccessible = true
+                method.invoke(menu, true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
         return true
     }
 
@@ -191,7 +200,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLocale(context: Context, langCode: String) {
+    @Suppress("DEPRECATION")
+    private fun setLocale(context: Context , langCode: String) {
         val locale = Locale(langCode)
         Locale.setDefault(locale)
         val config = Configuration()

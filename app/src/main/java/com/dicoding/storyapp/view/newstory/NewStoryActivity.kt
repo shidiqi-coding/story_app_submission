@@ -1,6 +1,7 @@
 package com.dicoding.storyapp.view.newstory
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,6 +23,7 @@ import com.dicoding.storyapp.databinding.ActivityNewStoryBinding
 import com.dicoding.storyapp.getImageUri
 import com.dicoding.storyapp.reduceFileImage
 import com.dicoding.storyapp.uriToFile
+import com.dicoding.storyapp.view.helper.LocaleHelper
 import com.dicoding.storyapp.view.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -34,6 +36,12 @@ class NewStoryActivity : AppCompatActivity() {
     private lateinit var viewModel: NewStoryViewModel
     private var currentImageUri: Uri? = null
     private var token: String? = null
+
+    override fun attachBaseContext(newBase: Context?) {
+        val langCode = LocaleHelper.getSavedLanguage(newBase ?: return)
+        val contextWithLocale = LocaleHelper.applyLanguage(newBase, langCode)
+        super.attachBaseContext(contextWithLocale)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

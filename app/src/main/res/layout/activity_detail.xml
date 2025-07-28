@@ -11,51 +11,53 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/tv_detail_image"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_margin="16dp"
-                android:scaleType="centerCrop"
-                android:transitionName="image_detail"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:src="@tools:sample/avatars"
-                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:transitionName="back"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp"
                 android:src="@drawable/ic_back_button"
-                app:tint="@color/white"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/icon_color"
                 tools:ignore="ContentDescription" />
+
+
+            <ImageView
+                android:id="@+id/tv_detail_image"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
+                android:transitionName="image_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_back"
+                tools:ignore="ContentDescription"
+                tools:src="@tools:sample/avatars" />
+
 
             <TextView
                 android:id="@+id/tv_detail_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:transitionName="title"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
                 tools:text="name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/tv_detail_description"
@@ -67,5 +69,4 @@
             android:textSize="16sp"
             android:transitionName="description" />
     </LinearLayout>
-
 </ScrollView>
