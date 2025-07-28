@@ -16,6 +16,21 @@ class SettingPreferences private constructor(private val context: Context) {
 
     private val THEME_KEY = intPreferencesKey("theme_setting")
     private val LANGUAGE_KEY = stringPreferencesKey("language_setting")
+    private val TOKEN_KEY = stringPreferencesKey("auth_token")
+
+
+
+    fun getToken(): Flow<String?> {
+        return context.settingDataStore.data.map { preferences ->
+            preferences[TOKEN_KEY]
+        }
+    }
+
+    suspend fun saveToken(token: String) {
+        context.settingDataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = token
+        }
+    }
 
     fun getThemeSetting(): Flow<Int> {
         return context.settingDataStore.data.map { preferences ->

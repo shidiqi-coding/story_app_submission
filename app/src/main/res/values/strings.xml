@@ -38,7 +38,7 @@
     <string name="success_title">Selamat!</string>
     <string name="register_failed">Registrasi gagal</string>
     <string name="login_success_message">Anda berhasil login. Apakah Anda siap untuk membagi cerita?</string>
-    <string name ="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
+    <string name="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
     <string name="continue_button">Lanjut</string>
     <string name="login_failed_title">Login Gagal</string>
     <string name="error_parse_message">Terjadi kesalahan saat parsing error</string>
@@ -68,5 +68,9 @@
     <string name="add_story">Tambah Cerita</string>
     <string name="empty_image_warning">Mohon masukkan gambar terlebih dahulu</string>
     <string name="empty_description_warning">Mohon masukkan catatan terlebih dahulu</string>
+    <string name="appwidget_text">Foto CeritaKita</string>
+    <string name="add_widget">Tambah widget</string>
+    <string name="empty_widget">TIDAK ADA DATA</string>
+    <string name="image_new_story">image_new_story</string>
 
 </resources>

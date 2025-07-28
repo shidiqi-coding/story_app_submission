@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:backgroundTint="@color/orange"
+        android:transitionName="fab_transition"
         android:src="@drawable/ic_add"
         android:contentDescription="@string/add_story"
         app:layout_constraintBottom_toBottomOf="parent"

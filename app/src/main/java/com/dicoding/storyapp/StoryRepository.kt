@@ -122,9 +122,6 @@ class StoryRepository(
         return userPreference.getSession().asLiveData()
     }
 
-//    suspend fun logout() {
-//        userPreference.logout()
-//    }
 
     companion object {
         @Volatile

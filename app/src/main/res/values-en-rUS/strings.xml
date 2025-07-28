@@ -72,5 +72,9 @@ and other interesting experiences?</string>
     <string name="add_story">Add Story</string>
     <string name="empty_image_warning">Please enter an image first</string>
     <string name="empty_description_warning">Please enter notes first</string>
+    <string name="appwidget_text">CeritaKita Image</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_widget">NO DATA</string>
+    <string name="image_new_story">image_new_story</string>
 
 </resources>

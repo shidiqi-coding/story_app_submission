@@ -25,13 +25,13 @@ class DetailActivity : AppCompatActivity() {
 
         val factory = ViewModelFactory.getInstance(applicationContext)
         viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-
+        viewModel.getDetailStory(storyId)
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        viewModel.getDetailStory(storyId)
+
         observeStory()
 
 

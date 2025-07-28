@@ -1,5 +1,6 @@
 package com.dicoding.storyapp.view.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class DetailViewModel(private val repository: StoryRepository) : ViewModel() {
                 val story = repository.getStoryDetail(id)
                 _detailStories.value = story
             } catch (e: Exception) {
+                Log.e("ViewModel", "Error: ${e.message}")
             }
         }
     }

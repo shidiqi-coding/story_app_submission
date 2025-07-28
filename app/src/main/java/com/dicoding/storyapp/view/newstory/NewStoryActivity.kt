@@ -149,10 +149,6 @@ class NewStoryActivity : AppCompatActivity() {
         }
     }
 
-//    private fun goBackWithResult() {
-//        setResult(RESULT_OK)
-//        finish()
-//    }
 
     companion object {
         const val REQUEST_CAMERA_PERMISSION = 100

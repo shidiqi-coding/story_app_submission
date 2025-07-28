@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
@@ -61,7 +62,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.getStories()
 
         binding.fabAddStory.setOnClickListener {
-            startActivity(Intent(this, NewStoryActivity::class.java))
+            val intent = Intent(this, NewStoryActivity::class.java)
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                binding.fabAddStory,
+                "fab_transition"
+            )
+
+            startActivity(intent, options.toBundle())
         }
     }
 
@@ -76,9 +85,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ListStoryAdapter { storyId ->
-            DetailActivity.start(this, storyId)
+        adapter = ListStoryAdapter { storyId, imageView, nameView, descView ->
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("EXTRA_ID", storyId)
+            }
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                androidx.core.util.Pair(imageView, imageView.transitionName),
+                androidx.core.util.Pair(nameView, nameView.transitionName),
+                androidx.core.util.Pair(descView, descView.transitionName)
+            )
+
+            startActivity(intent, options.toBundle())
         }
+
         binding.rvStoryList.layoutManager = LinearLayoutManager(this)
         binding.rvStoryList.adapter = adapter
     }
