@@ -1,5 +1,7 @@
 package com.dicoding.storyapp.view.main
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 
 import android.content.Intent
@@ -27,6 +29,7 @@ import com.dicoding.storyapp.view.newstory.NewStoryActivity
 import com.dicoding.storyapp.view.setting.SettingActivity
 import com.dicoding.storyapp.view.setting.SettingPreferences
 import com.dicoding.storyapp.view.helper.LocaleHelper
+import com.dicoding.storyapp.view.widget.ImagesBannerWidget
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -72,6 +75,8 @@ class MainActivity : AppCompatActivity() {
 
             startActivity(intent, options.toBundle())
             }
+
+
     }
 
     private fun setUpGreeting() {
@@ -94,7 +99,8 @@ class MainActivity : AppCompatActivity() {
                 this,
                 androidx.core.util.Pair(imageView as View, imageView.transitionName),
                 androidx.core.util.Pair(nameView as View, nameView.transitionName),
-                androidx.core.util.Pair(descView as View, descView.transitionName)
+                androidx.core.util.Pair(imageView as View, imageView.transitionName),
+                androidx.core.util.Pair(descView as View, descView.transitionName) ,
             )
 
             startActivity(intent, options.toBundle())
@@ -107,6 +113,10 @@ class MainActivity : AppCompatActivity() {
     private fun observeView() {
         viewModel.storyList.observe(this) { stories ->
             adapter.submitList(stories)
+
+            if (stories.isNotEmpty()) {
+                refreshWidgetStackView()
+            }
         }
 
         viewModel.loading.observe(this) { isLoading ->
@@ -119,6 +129,15 @@ class MainActivity : AppCompatActivity() {
                 viewModel.clearError()
             }
         }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun refreshWidgetStackView() {
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val componentName = ComponentName(this, ImagesBannerWidget::class.java)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

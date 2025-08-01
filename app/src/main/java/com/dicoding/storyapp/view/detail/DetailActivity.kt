@@ -2,6 +2,7 @@ package com.dicoding.storyapp.view.detail
 
 import android.content.Context
 import android.content.Intent
+import android.transition.Fade
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +36,17 @@ class DetailActivity : AppCompatActivity() {
             Log.e("DetailActivity", "Story ID is blank!")
             finish()
             return
+        }
+
+        binding.tvDetailImage.transitionName = "image_detail"
+        binding.tvDetailName.transitionName = "title"
+        binding.tvDetailDescription.transitionName = "description"
+
+        window.enterTransition = Fade()
+        window.exitTransition = Fade()
+
+        binding.btnBack.setOnClickListener {
+            supportFinishAfterTransition()
         }
 
 

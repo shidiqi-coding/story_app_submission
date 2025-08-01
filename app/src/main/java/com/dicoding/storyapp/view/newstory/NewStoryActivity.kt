@@ -44,6 +44,9 @@ class NewStoryActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.sharedElementEnterTransition = android.transition.TransitionInflater.from(this)
+            .inflateTransition(android.R.transition.move)
+
         super.onCreate(savedInstanceState)
         binding = ActivityNewStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -25,22 +25,22 @@ class ListStoryAdapter(
      override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
           val story = getItem(position)
           holder.bind(story)
+          holder.binding.imgStory.transitionName = "image_detail"
+          holder.binding.tvNameStory.transitionName = "name"
+          holder.binding.tvSummaryStory.transitionName = "description"
 
-          story.id?.let { id ->
-               holder.binding.imgStory.transitionName = "image_detail_$id"
-               holder.binding.tvNameStory.transitionName = "title_$id"
-               holder.binding.tvSummaryStory.transitionName = "description_$id"
+
 
                holder.itemView.setOnClickListener {
                     onItemClicked(
-                         id,
+                         story.id ?: "",
                          holder.binding.imgStory,
                          holder.binding.tvNameStory,
                          holder.binding.tvSummaryStory
                     )
                }
           }
-     }
+     //}
 
      class StoryViewHolder(val binding: ItemListStoryBinding) :
           RecyclerView.ViewHolder(binding.root) {

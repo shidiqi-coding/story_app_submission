@@ -72,5 +72,6 @@
     <string name="add_widget">Tambah widget</string>
     <string name="empty_widget">TIDAK ADA DATA</string>
     <string name="image_new_story">image_new_story</string>
+    <string name="no_data">Tidak Ada Data</string>
 
 </resources>

@@ -42,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
                 val userPref = getSharedPreferences("user_session",MODE_PRIVATE)
 
                 val isFirstRun = onboardingPref.getBoolean("isFirstRun", true)
-                val isLoggedIn = userPref.getBoolean("isLoggedIn",false)
+                val isLoggedIn = userPref.getBoolean("isLoggedIn",true)
 
                when {
                    isFirstRun -> {

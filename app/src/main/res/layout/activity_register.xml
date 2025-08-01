@@ -51,7 +51,7 @@
                     tools:ignore="ContentDescription" />
             </FrameLayout>
 
-            <!-- Konten Form -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!-- Username -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                         tools:ignore="Autofill" />
                 </LinearLayout>
 
-                <!-- Email -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -207,7 +207,8 @@
         android:background="#80000000"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:elevation="10dp">
 
         <ProgressBar
             android:id="@+id/registerPB"

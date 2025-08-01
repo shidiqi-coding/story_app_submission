@@ -17,7 +17,7 @@ data class StoryResponse(
 data class ListStoryItem(
 
 	@field:SerializedName("photoUrl")
-	val photoUrl: String? = null,
+	val photoUrl: String,
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
