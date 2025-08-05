@@ -1,4 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="image_new_story">image_new_story</string>
+
+    <string name="app_name">CeritaKita</string>
+
+    <string name="welcomeText">Selamat Datang Di CeritaKita</string>
+    <string name="welcomeDesc">Apakah Anda siap berbagi cerita atau pengalaman anda sehari-hari baik berupa Liburan, karir,
+        dan pengalaman-pengalaman yang menarik?</string>
+
+    <string name="login">MASUK</string>
+    <string name="register">DAFTAR</string>
+
+    <string name="loginText">Selamat Datang</string>
+    <string name="loginDesc">Masukkan Akun Anda</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="username_input">Masukkan akun Email anda</string>
+    <string name="password_input">Masukkan kata sandi anda</string>
+    <string name="username_register">Nama lengkap</string>
+    <string name="password_register">Kata Sandi</string>
+    <string name="email_register">Email</string>
+
+    <string name="register_title">Silahkan lengkapi data diri Anda</string>
+    <string name="username_register_input">Masukkan nama lengkap anda</string>
+    <string name="email_register_input">Masukkan Akun Email anda</string>
+    <string name="password_register_input">Masukkan kata sandi anda</string>
+
+    <string name="error_password">Password tidak boleh kurang dari 8 karakter</string>
+
+
+    <string name="list_description">Deskripsi</string>
+
+    <string name="setting">Pengaturan</string>
+    <string name="logout">Keluar</string>
+    <string name="back_button">back/n</string>
+    <string name="greeting">Hai %1$s, Selamat datang</string>
+    <string name="email_empty">Email tidak boleh kosong</string>
+    <string name="email_invalid">Format email tidak valid</string>
+    <string name="password_empty">Password tidak boleh kosong</string>
+    <string name="success_title">Selamat!</string>
+    <string name="register_failed">Registrasi gagal</string>
+    <string name="login_success_message">Anda berhasil login. Apakah Anda siap untuk membagi cerita?</string>
+    <string name="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
+    <string name="continue_button">Lanjut</string>
+    <string name="login_failed_title">Login Gagal</string>
+    <string name="error_parse_message">Terjadi kesalahan saat parsing error</string>
+    <string name="ok_button">OK</string>
+
+    <string name="logout_popup_text">Konfirmasi Logout</string>
+    <string name="logout_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes_button">Ya</string>
+    <string name="cancel_button">Batal</string>
+
+    <string name="upload">Unggah</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description">Deskripsi</string>
+
+    <string name="appearance">Tampilan</string>
+    <string name="language">Bahasa</string>
+    <string name="language_system">Bahasa System</string>
+    <string name="en_language">Bahasa Inggris</string>
+    <string name="id_language">Bahasa Indonesia</string>
+    <string name="choose_theme">Pilih tema</string>
+    <string name="device_theme">"Tema perangkat sistem"</string>
+    <string name="light_theme">Tema Terang</string>
+    <string name="dark_theme">Tema Gelap</string>
+    <string name="upload_success">berhasil diunggah</string>
+    <string name="appearance_subtitle">Pilih Tema pada perangkat Anda</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="empty_image_warning">Mohon masukkan gambar terlebih dahulu</string>
+    <string name="empty_description_warning">Mohon masukkan catatan terlebih dahulu</string>
+    <string name="appwidget_text">Foto CeritaKita</string>
+    <string name="add_widget">Tambah widget</string>
+    <string name="empty_widget">TIDAK ADA DATA</string>
+    <string name="no_data">Tidak Ada Data</string>
+
+    <string name="error_server">Terjadi kesalahan server: %1$d %2$s</string>
+    <string name="error_connection">Koneksi ke server gagal. Periksa jaringan Anda.</string>
+    <string name="error_detail_connection">Gagal mengambil detail cerita:</string>
+    <string name="error_network">Terjadi kesalahan jaringan</string>
+    <string name ="error_message">Terjadi kesalahan </string>
+    <string name ="display_camera_failed">Gagal menampilkan kamera</string>
+    <string name="upload_image_failed">Gagal mengupload gambar</string>
+
+
 </resources>

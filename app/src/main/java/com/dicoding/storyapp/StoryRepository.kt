@@ -2,6 +2,7 @@ package com.dicoding.storyapp
 
 
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -17,10 +18,12 @@ import kotlinx.coroutines.flow.first
 import okhttp3.MultipartBody
 import retrofit2.HttpException
 import okhttp3.RequestBody
+import java.io.IOException
 
 class StoryRepository(
     private val apiService: ApiService ,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val context: Context
 ) {
 
 
@@ -34,11 +37,12 @@ class StoryRepository(
             if (!error && loginResult != null) {
                 emit(ResultState.Success(loginResult))
             } else {
-                emit(ResultState.Error(response.message ?: "Login gagal"))
+                emit(ResultState.Error(response.message ?: context.getString(R.string.login_failed_title)))
             }
         } catch (e: HttpException) {
             val errorMsg = e.response()?.errorBody()?.string()
-            emit(ResultState.Error(errorMsg ?: "Terjadi kesalahan jaringan"))
+            emit(ResultState.Error(errorMsg ?: context.getString(R.string.error_network)))
+
         }
     }
 
@@ -48,13 +52,14 @@ class StoryRepository(
         try {
             val response = apiService.register(name , email , password)
             if (response.error == false) {
-                emit(ResultState.Success(response.message ?: "Registrasi berhasil"))
+                emit(ResultState.Success(response.message ?: context.getString(R.string.register_success_message)))
             } else {
-                emit(ResultState.Error(response.message ?: "Registrasi gagal"))
+                emit(ResultState.Error(response.message ?: context.getString(R.string.register_failed)))
             }
         } catch (e: HttpException) {
             val errorMsg = e.response()?.errorBody()?.string()
-            emit(ResultState.Error(errorMsg ?: "Terjadi kesalahan jaringan"))
+            emit(ResultState.Error(errorMsg ?: context.getString(R.string.error_network)))
+
         }
     }
 
@@ -84,17 +89,18 @@ class StoryRepository(
     suspend fun getStories(): List<ListStoryItem> {
         val user = userPreference.getSession().first()
         val token = "Bearer ${user.token}"
-        Log.d("DEBUG_TOKEN" , token)
+        Log.d("DEBUG_TOKEN", token)
 
         return try {
             val response = apiService.getStories(token)
             response.listStory?.filterNotNull() ?: emptyList()
-        } catch (e: HttpException) {
-            throw Exception("Terjadi kesalahan server: ${e.code()} ${e.message()}")
-        } catch (_: java.io.IOException) {
-            throw Exception("Koneksi ke server gagal. Periksa jaringan Anda.")
+        } catch (_: HttpException) {
+            throw Exception(context.getString(R.string.error_server))
+        } catch (_: IOException) {
+            throw Exception(context.getString(R.string.error_connection))
         }
     }
+
 
     suspend fun getStoryDetail(storyId: String): Story {
         val user = userPreference.getSession().first()
@@ -105,12 +111,13 @@ class StoryRepository(
             if (response.error == false && response.story != null) {
                 response.story
             } else {
-                throw Exception("Gagal mengambil detail cerita: ${response.message}")
+                throw Exception(context.getString(R.string.error_detail_connection, response.message))
+
             }
         } catch (e: HttpException) {
             throw Exception("HTTP Error: ${e.code()} ${e.message()}")
         } catch (e: Exception) {
-            throw Exception("Terjadi kesalahan: ${e.message}")
+            throw Exception(context.getString(R.string.error_message, e.message))
         }
     }
 
@@ -129,10 +136,11 @@ class StoryRepository(
 
         fun getInstance(
             apiService: ApiService ,
-            userPreference: UserPreference
+            userPreference: UserPreference,
+            context : Context
         ): StoryRepository {
             return INSTANCE ?: synchronized(this) {
-                val instance = StoryRepository(apiService , userPreference)
+                val instance = StoryRepository(apiService , userPreference, context)
                 INSTANCE = instance
                 instance
             }

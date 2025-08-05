@@ -73,5 +73,15 @@
     <string name="empty_widget">TIDAK ADA DATA</string>
     <string name="image_new_story">image_new_story</string>
     <string name="no_data">Tidak Ada Data</string>
+    <string name="error_server">Terjadi kesalahan server: %1$d %2$s</string>
+    <string name="error_connection">Koneksi ke server gagal. Periksa jaringan Anda.</string>
+    <string name="error_detail_connection">Gagal mengambil detail cerita:</string>
+    <string name="error_network">Terjadi kesalahan jaringan</string>
+    <string name ="error_message">Terjadi kesalahan </string>
+    <string name ="display_camera_failed">Gagal menampilkan kamera</string>
+    <string name="upload_image_failed">Gagal mengupload gambar</string>
+
+
+
 
 </resources>

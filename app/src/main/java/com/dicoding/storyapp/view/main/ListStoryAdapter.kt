@@ -1,5 +1,6 @@
 package com.dicoding.storyapp.view.main
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -22,7 +23,8 @@ class ListStoryAdapter(
           return StoryViewHolder(binding)
      }
 
-     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
+     @SuppressLint("SuspiciousIndentation")
+     override fun onBindViewHolder(holder: StoryViewHolder , position: Int) {
           val story = getItem(position)
           holder.bind(story)
           holder.binding.imgStory.transitionName = "image_detail"
@@ -40,7 +42,7 @@ class ListStoryAdapter(
                     )
                }
           }
-     //}
+
 
      class StoryViewHolder(val binding: ItemListStoryBinding) :
           RecyclerView.ViewHolder(binding.root) {

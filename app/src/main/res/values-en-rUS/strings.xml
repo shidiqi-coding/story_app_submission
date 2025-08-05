@@ -77,5 +77,14 @@ and other interesting experiences?</string>
     <string name="empty_widget">NO DATA</string>
     <string name="image_new_story">image_new_story</string>
     <string name="no_data">No data</string>
+    <string name="error_server">Server error occurred: %1$d %2$s</string>
+    <string name="error_connection">Failed to connect to the server. Please check your connection.</string>
+    <string name="error_detail_connection">Failed to retrieve story details:</string>
+    <string name="error_network">A network error occurred</string>
+    <string name ="error_message">There is an error</string>
+    <string name ="display_camera_failed">Failed to display camera</string>
+    <string name="upload_image_failed">Failed to upload image</string>
+
+
 
 </resources>

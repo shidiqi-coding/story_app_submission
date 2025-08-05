@@ -6,9 +6,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.provider.MediaStore
+import android.transition.Fade
+import android.transition.TransitionInflater
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +29,9 @@ import com.dicoding.storyapp.uriToFile
 import com.dicoding.storyapp.view.helper.LocaleHelper
 import com.dicoding.storyapp.view.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.MultipartBody
 
 class NewStoryActivity : AppCompatActivity() {
 
@@ -44,18 +47,37 @@ class NewStoryActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.sharedElementEnterTransition = android.transition.TransitionInflater.from(this)
+
+        window.sharedElementEnterTransition = TransitionInflater.from(this)
             .inflateTransition(android.R.transition.move)
+        window.sharedElementReturnTransition = TransitionInflater.from(this)
+            .inflateTransition(android.R.transition.move)
+
+        window.enterTransition = Fade()
+        window.exitTransition = Fade()
 
         super.onCreate(savedInstanceState)
         binding = ActivityNewStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        postponeEnterTransition()
+        binding.root.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                binding.root.viewTreeObserver.removeOnPreDrawListener(this)
+                startPostponedEnterTransition()
+                return true
+            }
+        })
 
         setupViewModel()
 
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.cameraButton.setOnClickListener { startCamera() }
         binding.uploadButton.setOnClickListener { uploadImage() }
+
+        binding.btnBackNs.setOnClickListener {
+            supportFinishAfterTransition()
+        }
     }
 
     private fun setupViewModel() {
@@ -98,13 +120,10 @@ class NewStoryActivity : AppCompatActivity() {
                 when (result) {
                     is ResultState.Loading -> {
                         binding.loadingOverlay.visibility = View.VISIBLE
-
                     }
                     is ResultState.Success -> {
                         showToast(getString(R.string.upload_success))
                         binding.loadingOverlay.visibility = View.GONE
-                        Toast.makeText(this, "Story uploaded successfully", Toast.LENGTH_SHORT).show()
-
                         val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
@@ -113,7 +132,6 @@ class NewStoryActivity : AppCompatActivity() {
                     is ResultState.Error -> {
                         showToast(result.error)
                         showLoading(false)
-                        Toast.makeText(this, "Upload failed: ${result.error}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -126,7 +144,7 @@ class NewStoryActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressLoadingIndicator.visibility = if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+        binding.progressLoadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun startGallery() {
@@ -159,7 +177,6 @@ class NewStoryActivity : AppCompatActivity() {
             binding.storyImageView.setImageBitmap(it)
         }
     }
-
 
     companion object {
         const val REQUEST_CAMERA_PERMISSION = 100

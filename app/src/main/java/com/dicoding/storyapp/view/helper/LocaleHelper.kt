@@ -6,9 +6,9 @@ import android.os.Build
 import java.util.Locale
 
 object LocaleHelper {
-    private const val LANGUAGE_PREFERENCE = "settings"
-    private const val LANGUAGE_KEY = "language_setting"
-    private const val DEFAULT_LANGUAGE = "system"
+//    private const val LANGUAGE_PREFERENCE = "settings"
+//    private const val LANGUAGE_KEY = "language_setting"
+//    private const val DEFAULT_LANGUAGE = "system"
 
     fun onAttach(context: Context): Context {
         return applyLanguage(context, getSavedLanguage(context))

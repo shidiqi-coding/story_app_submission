@@ -23,7 +23,8 @@ private const val MAXIMAL_SIZE = 1000000
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
 
-fun getImageUri(context: Context, bitmap: Bitmap): Uri {
+@Suppress("DEPRECATION")
+fun getImageUri(context: Context , bitmap: Bitmap): Uri {
     val bytes = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
     val path = MediaStore.Images.Media.insertImage(

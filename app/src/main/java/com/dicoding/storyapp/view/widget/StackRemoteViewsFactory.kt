@@ -13,6 +13,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory
 import com.bumptech.glide.Glide
 import com.dicoding.storyapp.data.response.ListStoryItem
 import com.dicoding.storyapp.data.retrofit.ApiConfig
+import com.dicoding.storyapp.data.pref.UserPreference
 import com.dicoding.storyapp.view.setting.SettingPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -29,9 +30,9 @@ class StackRemoteViewsFactory(private val context: Context) : RemoteViewsFactory
 
     override fun onDataSetChanged() {
         try {
-            val pref = SettingPreferences.getInstance(context)
+            val pref = UserPreference.getInstance(context)
             val token = runBlocking {
-                pref.getToken().first()
+                pref.getSession().first().token
             }
             val apiService = ApiConfig.getApiService()
             val response = runBlocking { apiService.getStories("Bearer $token") }

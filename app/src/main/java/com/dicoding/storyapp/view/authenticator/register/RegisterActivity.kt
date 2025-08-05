@@ -87,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.register_success_message))
                             setMessage("Akun $email telah berhasil dibuat. Silakan login.")
-                            setPositiveButton("Lanjut") { _, _ ->
+                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
                                 finish()
                             }
                             show()

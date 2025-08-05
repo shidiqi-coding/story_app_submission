@@ -5,6 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".view.newstory.NewStoryActivity">
 
+    <ImageView
+        android:id="@+id/btnBackNs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        android:src="@drawable/ic_back_button"
+        android:transitionName="back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/icon_color"
+        tools:ignore="ContentDescription" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,13 +25,17 @@
         android:fillViewport="true"
         android:fitsSystemWindows="true">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:transitionName="fab_transition"
             android:paddingTop="?attr/actionBarSize"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingBottom="16dp">
+
+
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progressLoadingIndicator"
@@ -76,6 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:hint="@string/description"
+                android:textColor="@color/text_color"
                 android:transitionName="edit_text"
                 android:background="@drawable/bg_edittext"
                 android:padding="12dp"
