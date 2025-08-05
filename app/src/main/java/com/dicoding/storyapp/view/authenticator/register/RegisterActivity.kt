@@ -61,17 +61,22 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.passwordInput.text.toString().trim()
 
             if (name.isEmpty()) {
-                binding.UsernameInput.error = "Nama tidak boleh kosong"
+                binding.UsernameInput.error = getString(R.string.required_name)
                 return@setOnClickListener
             }
 
             if (email.isEmpty()) {
-                binding.emailInput.error = "Email tidak boleh kosong"
+                binding.emailInput.error = getString(R.string.required_email)
                 return@setOnClickListener
             }
 
             if (password.isEmpty()) {
-                binding.passwordInput.error = "Password tidak boleh kosong"
+                binding.passwordInput.error = getString(R.string.required_password)
+                return@setOnClickListener
+            }
+
+            if(password.length < 8) {
+                binding.passwordInput.error = getString(R.string.minimum_password)
                 return@setOnClickListener
             }
 
@@ -85,8 +90,8 @@ class RegisterActivity : AppCompatActivity() {
                         binding.loadingOverlay.visibility = View.GONE
 
                         AlertDialog.Builder(this).apply {
-                            setTitle(getString(R.string.register_success_message))
-                            setMessage("Akun $email telah berhasil dibuat. Silakan login.")
+                            setTitle(getString(R.string.success_title))
+                            setMessage(getString(R.string.register_success_message))
                             setPositiveButton(getString(R.string.continue_button)) { _, _ ->
                                 finish()
                             }

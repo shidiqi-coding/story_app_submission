@@ -5,18 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".view.newstory.NewStoryActivity">
 
-    <ImageView
-        android:id="@+id/btnBackNs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        android:src="@drawable/ic_back_button"
-        android:transitionName="back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/icon_color"
-        tools:ignore="ContentDescription" />
 
 
     <ScrollView

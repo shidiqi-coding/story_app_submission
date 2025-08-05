@@ -1,6 +1,6 @@
 package com.dicoding.storyapp.view.authenticator.register
 
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.ViewModel
 import com.dicoding.storyapp.StoryRepository
 

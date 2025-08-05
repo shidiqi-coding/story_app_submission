@@ -80,6 +80,10 @@
     <string name ="error_message">Terjadi kesalahan </string>
     <string name ="display_camera_failed">Gagal menampilkan kamera</string>
     <string name="upload_image_failed">Gagal mengupload gambar</string>
+    <string name="required_name">Nama wajib diisi</string>
+    <string name="required_email">Email wajib diisi</string>
+    <string name="required_password">Kata Sandi wajib diisi</string>
+    <string name="minimum_password">Password minimal 8 karakter</string>
 
 
 

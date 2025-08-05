@@ -84,6 +84,11 @@ and other interesting experiences?</string>
     <string name ="error_message">There is an error</string>
     <string name ="display_camera_failed">Failed to display camera</string>
     <string name="upload_image_failed">Failed to upload image</string>
+    <string name="required_name">Name is required</string>
+    <string name="required_email">Email is required</string>
+    <string name="required_password">Password is required</string>
+    <string name="minimum_password">Password must be at least 8 characters</string>
+
 
 
 

@@ -42,7 +42,7 @@ class NewStoryActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         val langCode = LocaleHelper.getSavedLanguage(newBase ?: return)
-        val contextWithLocale = LocaleHelper.applyLanguage(newBase, langCode)
+        val contextWithLocale = LocaleHelper.applyLanguage(newBase , langCode)
         super.attachBaseContext(contextWithLocale)
     }
 
@@ -61,7 +61,8 @@ class NewStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         postponeEnterTransition()
-        binding.root.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        binding.root.viewTreeObserver.addOnPreDrawListener(object :
+            ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 binding.root.viewTreeObserver.removeOnPreDrawListener(this)
                 startPostponedEnterTransition()
@@ -75,14 +76,12 @@ class NewStoryActivity : AppCompatActivity() {
         binding.cameraButton.setOnClickListener { startCamera() }
         binding.uploadButton.setOnClickListener { uploadImage() }
 
-        binding.btnBackNs.setOnClickListener {
-            supportFinishAfterTransition()
-        }
+
     }
 
     private fun setupViewModel() {
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[NewStoryViewModel::class.java]
+        viewModel = ViewModelProvider(this , factory)[NewStoryViewModel::class.java]
 
         viewModel.getSession().observe(this) { user: UserModel ->
             token = user.token
@@ -97,8 +96,8 @@ class NewStoryActivity : AppCompatActivity() {
         }
 
         currentImageUri?.let { uri ->
-            val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
+            val imageFile = uriToFile(uri , this).reduceFileImage()
+            Log.d("Image File" , "showImage: ${imageFile.path}")
             val description = binding.descriptionEditText.text.toString()
 
             if (description.isEmpty()) {
@@ -110,37 +109,41 @@ class NewStoryActivity : AppCompatActivity() {
 
             val requestImage = imageFile.asRequestBody("image/jpeg".toMediaType())
             val multipartImage = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
+                "photo" ,
+                imageFile.name ,
                 requestImage
             )
             val descRequestBody = description.toRequestBody("text/plain".toMediaType())
 
-            viewModel.uploadStory(userToken, multipartImage, descRequestBody).observe(this) { result ->
-                when (result) {
-                    is ResultState.Loading -> {
-                        binding.loadingOverlay.visibility = View.VISIBLE
-                    }
-                    is ResultState.Success -> {
-                        showToast(getString(R.string.upload_success))
-                        binding.loadingOverlay.visibility = View.GONE
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }
-                    is ResultState.Error -> {
-                        showToast(result.error)
-                        showLoading(false)
+            viewModel.uploadStory(userToken , multipartImage , descRequestBody)
+                .observe(this) { result ->
+                    when (result) {
+                        is ResultState.Loading -> {
+                            binding.loadingOverlay.visibility = View.VISIBLE
+                        }
+
+                        is ResultState.Success -> {
+                            showToast(getString(R.string.upload_success))
+                            binding.loadingOverlay.visibility = View.GONE
+                            val intent = Intent(this , MainActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+
+                        is ResultState.Error -> {
+                            showToast(result.error)
+                            showLoading(false)
+                        }
                     }
                 }
-            }
 
         } ?: showToast(getString(R.string.empty_image_warning))
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this , message , Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -148,35 +151,45 @@ class NewStoryActivity : AppCompatActivity() {
     }
 
     private fun startGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryLauncher.launch(intent)
     }
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImage = result.data?.data
-            selectedImage?.let {
-                currentImageUri = it
-                binding.storyImageView.setImageURI(it)
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val selectedImage = result.data?.data
+                selectedImage?.let {
+                    currentImageUri = it
+                    binding.storyImageView.setImageURI(it)
+                }
             }
         }
-    }
 
     private fun startCamera() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        if (ContextCompat.checkSelfPermission(
+                this ,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this ,
+                arrayOf(Manifest.permission.CAMERA) ,
+                REQUEST_CAMERA_PERMISSION
+            )
         } else {
             cameraLauncher.launch(null)
         }
     }
 
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
-        bitmap?.let {
-            val uri = getImageUri(this, it)
-            currentImageUri = uri
-            binding.storyImageView.setImageBitmap(it)
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            bitmap?.let {
+                val uri = getImageUri(this , it)
+                currentImageUri = uri
+                binding.storyImageView.setImageBitmap(it)
+            }
         }
-    }
 
     companion object {
         const val REQUEST_CAMERA_PERMISSION = 100
