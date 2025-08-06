@@ -6,9 +6,6 @@ import android.os.Build
 import java.util.Locale
 
 object LocaleHelper {
-//    private const val LANGUAGE_PREFERENCE = "settings"
-//    private const val LANGUAGE_KEY = "language_setting"
-//    private const val DEFAULT_LANGUAGE = "system"
 
     fun onAttach(context: Context): Context {
         return applyLanguage(context, getSavedLanguage(context))
@@ -34,9 +31,9 @@ object LocaleHelper {
         return updateResources(context, locale)
     }
 
-    fun wrap(context: Context, language: String): Context {
-        return applyLanguage(context, language)
-    }
+//    fun wrap(context: Context, language: String): Context {
+//        return applyLanguage(context, language)
+//    }
 
     @Suppress("DEPRECATION")
     private fun updateResources(context: Context, locale: Locale): Context {

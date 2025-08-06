@@ -86,6 +86,7 @@ class RegisterActivity : AppCompatActivity() {
                         binding.loadingOverlay.visibility = View.VISIBLE
                     }
 
+
                     is ResultState.Success -> {
                         binding.loadingOverlay.visibility = View.GONE
 
@@ -98,6 +99,7 @@ class RegisterActivity : AppCompatActivity() {
                             show()
                         }
                     }
+
 
                     is ResultState.Error -> {
                         AlertDialog.Builder(this).apply {

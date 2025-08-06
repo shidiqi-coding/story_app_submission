@@ -2,6 +2,7 @@ package com.dicoding.storyapp
 
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import okhttp3.MultipartBody
 import retrofit2.HttpException
 import okhttp3.RequestBody
+import org.json.JSONObject
 import java.io.IOException
 
 class StoryRepository(
@@ -47,21 +49,27 @@ class StoryRepository(
     }
 
 
-    fun register(name: String , email: String , password: String) = liveData {
+    fun register(name: String, email: String, password: String) = liveData {
         emit(ResultState.Loading)
         try {
-            val response = apiService.register(name , email , password)
+            val response = apiService.register(name, email, password)
             if (response.error == false) {
-                emit(ResultState.Success(response.message ?: context.getString(R.string.register_success_message)))
+
+                emit(ResultState.Success(Pair(name, response.message ?: context.getString(R.string.register_success_message))))
             } else {
                 emit(ResultState.Error(response.message ?: context.getString(R.string.register_failed)))
             }
         } catch (e: HttpException) {
-            val errorMsg = e.response()?.errorBody()?.string()
-            emit(ResultState.Error(errorMsg ?: context.getString(R.string.error_network)))
-
+            val errorMsg = try {
+                val errorBody = e.response()?.errorBody()?.string()
+                JSONObject(errorBody ?: "").getString("message")
+            } catch (_: Exception) {
+                context.getString(R.string.error_network)
+            }
+            emit(ResultState.Error(errorMsg))
         }
     }
+
 
 
     fun uploadStory(
@@ -94,14 +102,20 @@ class StoryRepository(
         return try {
             val response = apiService.getStories(token)
             response.listStory?.filterNotNull() ?: emptyList()
-        } catch (_: HttpException) {
-            throw Exception(context.getString(R.string.error_server))
-        } catch (_: IOException) {
+        } catch (e: HttpException) {
+            val code = e.code()
+            val message = e.message()
+            Log.e("GET_STORIES_ERROR", "HTTP exception: $code $message")
+            throw Exception(context.getString(R.string.error_server, code, message))
+        } catch (e: IOException) {
+            Log.e("GET_STORIES_ERROR", "Network error: ${e.message}")
             throw Exception(context.getString(R.string.error_connection))
         }
     }
 
 
+
+    @SuppressLint("StringFormatInvalid")
     suspend fun getStoryDetail(storyId: String): Story {
         val user = userPreference.getSession().first()
         val token = "Bearer ${user.token}"
@@ -131,6 +145,7 @@ class StoryRepository(
 
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: StoryRepository? = null
 
