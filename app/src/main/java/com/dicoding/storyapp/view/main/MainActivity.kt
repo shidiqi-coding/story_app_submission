@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -187,6 +189,10 @@ class MainActivity : AppCompatActivity() {
         }.create()
 
         alertDialog.setOnShowListener {
+            alertDialog.findViewById<TextView>(android.R.id.message)?.setTextColor(
+                ContextCompat.getColor(this, R.color.text_color)
+            )
+
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
                 .setTextColor(getColor(R.color.button_color))
 

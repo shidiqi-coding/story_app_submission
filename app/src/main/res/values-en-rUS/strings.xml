@@ -17,7 +17,8 @@ and other interesting experiences?</string>
     <string name="username_register">FullName</string>
     <string name="password_register">Password</string>
     <string name="email_register">Email</string>
-
+    <string name="email_taken">This email is already registered.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="register_title">Please complete your personal data</string>
     <string name="username_register_input">Enter your FullName</string>
     <string name="email_register_input">Enter your Email Account</string>
@@ -39,8 +40,10 @@ and other interesting experiences?</string>
     <string name="password_empty">Password must not be empty</string>
     <string name="success_title">congratulations!</string>
     <string name="register_failed">Registration failed</string>
+    <string name="error_invalid_password">Invalid password</string>
     <string name="login_success_message">You Have Successfully logged in. Are you ready to share your story?</string>
     <string name ="register_success_message">Account %1$s has been successfully created. Let\'s share your stories and experiences</string>
+    <string name="user_not_found">"user not found</string>
     <string name="continue_button">continue</string>
     <string name="login_failed_title">Login Failed</string>
     <string name="error_parse_message">An error occurred while parsing the error response</string>

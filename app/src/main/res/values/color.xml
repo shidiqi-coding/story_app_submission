@@ -4,5 +4,7 @@
     <color name ="icon_color">#FF7F00</color>
     <color name ="button_color">#FF7F00</color>
     <color name ="text_color">@color/black</color>
+    <color name ="button_text_color">@color/orange</color>
+    <color name="background_screen">#FFFFFF</color>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.dicoding.storyapp.view
 
+import android.content.Context
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.storyapp.view.helper.LocaleHelper
 import com.dicoding.storyapp.data.pref.UserPreference
 import com.dicoding.storyapp.databinding.ActivityWelcomeBinding
 import com.dicoding.storyapp.view.authenticator.login.LoginActivity
@@ -23,6 +25,12 @@ class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeBinding
     private lateinit var userPref: UserPreference
+
+    override fun attachBaseContext(newBase: Context?) {
+        val langCode = LocaleHelper.getSavedLanguage(newBase ?: return)
+        val contextWithLocale = LocaleHelper.applyLanguage(newBase, langCode)
+        super.attachBaseContext(contextWithLocale)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,4 +4,12 @@
         <attr name="appWidgetInnerRadius" format="dimension" />
         <attr name="appWidgetRadius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="EditTextInput">
+        <attr name="hintText" format="string" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="isPassword" format="boolean" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+    </declare-styleable>
 </resources>

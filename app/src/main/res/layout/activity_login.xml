@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,46 +13,44 @@
         android:layout_height="wrap_content"
         android:paddingBottom="32dp">
 
-    <ImageView
-        android:id="@+id/headerShapeLogin"
-        android:layout_width="0dp"
-        android:layout_height="280dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/top_curve_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
 
 
-    <ImageButton
-        android:id="@+id/btnLogBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_back_button"
-        android:contentDescription="@string/back_button"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="12dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:tint="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <ImageView
-        android:id="@+id/loginImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintTop_toBottomOf="@id/headerShapeLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_read"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/headerShapeLogin"
+            android:layout_width="0dp"
+            android:layout_height="280dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_curve_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
 
+        <ImageButton
+            android:id="@+id/btnLogBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_back_button"
+            android:contentDescription="@string/back_button"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-
+        <ImageView
+            android:id="@+id/loginImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@id/headerShapeLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_read"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/titleLogin"
@@ -62,16 +61,17 @@
             android:text="@string/welcomeText"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerShapeLogin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerShapeLogin" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Username Label -->
         <TextView
             android:id="@+id/loginDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
             android:text="@string/loginDesc"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,136 +86,163 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="@string/username"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginDesc" />
+            app:layout_constraintTop_toBottomOf="@id/loginDesc"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/inputContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/usernameText"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
-            <!-- Email Input -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edittext"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:minHeight="56dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    app:tint="@color/orange"
-                    android:src="@drawable/user_ic"
-                    tools:ignore="ContentDescription" />
-
-                <EditText
-                    android:id="@+id/emailInput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:textColorHint="#666666"
-                    android:textColor="@color/text_color"
-                    android:hint="@string/username_input"
-                    android:inputType="textEmailAddress"
-                    android:textSize="16sp"
-                    android:minHeight="48dp"
-                    tools:ignore="Autofill" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/paswordText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/password"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usernameInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_edittext"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp"
-                android:minHeight="56dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/red">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    app:tint="@color/orange"
-                    android:src="@drawable/lock_ic"
-                    tools:ignore="ContentDescription" />
-
-                <EditText
-                    android:id="@+id/passwordInput"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/password_input"
-                    android:textColor="@color/text_color"
-                    android:inputType="textPassword"
-                    android:textColorHint="#666666"
-                    android:textSize="16sp"
-                    android:minHeight="48dp"
-                    app:errorEnabled="true"
-                    tools:ignore="Autofill" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:minHeight="56dp">
 
-                <ImageView
-                    android:id="@+id/ivToggleLogPassword"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_visibility_off"
-                    app:tint="@color/orange"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/user_ic"
+                        app:tint="@color/orange"
+                        tools:ignore="ContentDescription" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/usernameInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/username_input"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/custom_cursor"
+                        android:minHeight="48dp"
+                        tools:ignore="Autofill" />
+                </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/passwordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/password" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext"
+                android:minHeight="56dp"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/red"
+                app:boxBackgroundMode="none"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:minHeight="56dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/lock_ic"
+                        app:tint="@color/orange"
+                        tools:ignore="ContentDescription" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/password_input"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/custom_cursor"
+                        android:minHeight="48dp"
+                        tools:ignore="Autofill" />
+
+                    <ImageView
+                        android:id="@+id/ivToggleLogPassword"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="12dp"
+                        android:src="@drawable/ic_visibility_off"
+                        app:tint="@color/orange"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="32dp"
-            android:background="@drawable/rounded_corner"
+            android:layout_marginTop="12dp"
             android:minHeight="48dp"
             android:padding="12dp"
             android:text="@string/login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/rounded_corner"
             app:backgroundTint="@color/orange"
-            app:layout_constraintTop_toBottomOf="@id/inputContainer" />
+            app:layout_constraintTop_toBottomOf="@id/inputContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Loading Overlay -->
         <FrameLayout
             android:id="@+id/loadingOverlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="#80000000"
-            android:visibility="gone"
-            android:elevation="10dp"
             android:clickable="true"
             android:focusable="true"
+            android:elevation="10dp"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+
             <ProgressBar
                 android:id="@+id/loginPB"
                 style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
@@ -225,5 +252,6 @@
                 android:indeterminate="true"
                 android:indeterminateTint="@color/orange" />
         </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

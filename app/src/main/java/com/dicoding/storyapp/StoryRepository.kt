@@ -54,8 +54,11 @@ class StoryRepository(
         try {
             val response = apiService.register(name, email, password)
             if (response.error == false) {
-
-                emit(ResultState.Success(Pair(name, response.message ?: context.getString(R.string.register_success_message))))
+                val successMessage = String.format(
+                    context.getString(R.string.register_success_message),
+                    email
+                )
+                emit(ResultState.Success(Pair(name, successMessage)))
             } else {
                 emit(ResultState.Error(response.message ?: context.getString(R.string.register_failed)))
             }

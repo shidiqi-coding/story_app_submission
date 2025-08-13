@@ -37,10 +37,14 @@
     <string name="greeting">Hai %1$s, Selamat datang</string>
     <string name="email_empty">Email tidak boleh kosong</string>
     <string name="email_invalid">Format email tidak valid</string>
+    <string name="email_taken">Email ini sudah terdaftar.</string>
+    <string name="unknown_error">Terjadi kesalahan yang tidak diketahui.</string>
     <string name="password_empty">Password tidak boleh kosong</string>
     <string name="success_title">Selamat!</string>
     <string name="register_failed">Registrasi gagal</string>
+    <string name="error_invalid_password">Kata sandi salah</string>
     <string name="login_success_message">Anda berhasil login. Apakah Anda siap untuk membagi cerita?</string>
+    <string name="user_not_found">"Pengguna tidak ditemukan</string>
     <string name="register_success_message">Akun %1s telah berhasil dibuat. Yuk, berbagi cerita dan pengalaman Anda</string>
     <string name="continue_button">Lanjut</string>
     <string name="login_failed_title">Login Gagal</string>
